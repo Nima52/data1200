@@ -1,0 +1,237 @@
+:root {
+    /* Color Palette */
+    --primary-color: #F6F3ED;
+    --primary-contrast-color: #090c12;
+    --secondary-color: #E90D2C;
+    --secondary-constrast-color: #16f2d3;
+
+    /* Universal Variables */
+    --footer-height:50px;
+    --page-general-padding:1rem;
+
+    /* Desktop Variables */
+    --nav-desktop-width: 250px;
+    --main-desktop-left-padding: var(--nav-desktop-width);
+    --image-desktop-width: 40vw;
+
+    /* Tablet Variables */
+    --nav-tablet-width: 100vw;
+    --main-tablet-left-padding: 0;
+    --nav-tablet-height:100px;
+    --image-tablet-width: 20vw;
+
+}
+
+
+/* General Styling */
+body { /* <body> Tag Styling */
+    background: var(--primary-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    color: var(--primary-contrast-color);
+    font-size: clamp(0.8rem, 1vw, 1rem);;
+}
+main { /* <main> Tag Styling */
+    position: relative;
+    padding: var(--page-general-padding);
+    padding-left:  calc(var(--page-general-padding) + var(--main-desktop-left-padding));
+    min-height: 100vh;
+
+}
+section { /* <section> Tag Styling */
+    width: 100%;
+}
+section h1,section h2,section h3,section h4 { /* <h1> Tag Styling Inside of <section> Tag*/
+    text-align: center;
+}
+section figure { /* <figure> Tag Styling Inside of <section> Tag*/
+    text-align: center;
+    margin: auto;
+    max-width: calc(100vw - var(--page-general-padding) - var(--image-desktop-width));
+    max-height: calc((100vw - var(--page-general-padding) - var(--image-desktop-width)) * 9 / 16);
+    position: relative;
+    border: 2px solid var(--primary-contrast-color);
+    border-radius: 20px;
+    overflow: hidden;
+}
+section figure a img { /* <img> Tag Styling Inside of <a>, <figure>, <section> Tag*/
+    width: calc(100vw - var(--page-general-padding) - var(--image-desktop-width));
+    height: calc((100vw - var(--page-general-padding) - var(--image-desktop-width)) * 9 / 16);
+}
+section figure figcaption { /* <figcaption> Tag Styling Inside of <figure>, <section> Tag*/
+    position: absolute;
+    z-index: 4;
+    bottom: clamp(0.4rem, 1vw, 1rem);
+    right: clamp(0.4rem, 1vw, 1rem);
+    background-color: var(--primary-color);
+    color: var(--primary-contrast-color);
+    border: 2px solid var(--primary-contrast-color);
+    border-radius: 10px;
+    padding-left: 1rem;
+    padding-right: 0.6rem;
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
+}
+a { /* <a> Tag Styling */
+    text-decoration: none;
+    color: var(--secondary-constrast-color);
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+footer { /* <footer> Tag Styling */
+    height: var(--footer-height);
+    width:  calc(var(--nav-desktop-width) - var(--nav-desktop-width)/4);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    padding: var(--page-general-padding);
+    z-index: 5;
+    color: var(--primary-color);
+}
+header { /* <header> Tag Styling */
+    position: relative;
+}
+section div,span,p { /* <div>, <span> and <p> Tag Styling */
+    padding: 0.5rem;
+}
+section div { /* <div> Tag Styling Inside of <section>*/
+    margin: auto;
+    max-width: 40%;
+}
+
+
+/* Navbar Styling */
+.site-header { /* .site-header Class Styling as part of <header>*/
+    background: var(--primary-contrast-color);
+    height: 100%;
+    width: var(--nav-desktop-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+    border-right: 0.1rem dashed var(--primary-color);
+}
+.navbar { /* .site-header Class Styling Inside of <nav>*/
+    position: sticky;
+    top: 0;
+    flex-grow: 1;
+    z-index: 11;
+}
+.nav-list { /* .nav-list Class Styling Inside of .navbar */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.nav-item { /* .nav-item Class Styling Inside of .nav-list */
+    flex-shrink: 1;
+    padding-bottom: 0;
+}
+.nav-link { /* .nav-link Class Styling Inside of .nav-item */
+    color: var(--primary-color);
+    text-decoration: none;
+    display: block;
+    padding: 1rem;
+    padding-bottom: 0;
+}
+.site-current { /* .site-current Class Styling Inside of .site-header */
+    padding: 1rem;
+    padding-bottom: 0;
+    color: var(--secondary-color);
+}
+.nav-item:hover .nav-link { /* .site-item Class Styling When hovered Change .nav-link */
+    color: var(--secondary-color);
+}
+.logo { /* .logo Class Styling Inside of .site-header */
+    background: url("../media/left-logo-transparent.png");
+    background-size: contain; /* or 'cover', depending on your need */
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -40px;
+    right: 20;
+    transform: rotate(50deg);
+    z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Phone/Tablet Styling */
+@media only screen and (max-width: 767px) {
+    /* General Styling */
+    main {
+        padding: 0;
+    }
+    main > :last-child { /* Added Style Spacing to Bottom to Avoid Navbar Being Infront */
+        padding-bottom: calc(var(--nav-tablet-height) + 50px);
+    }
+    footer { /* Added Style to Change Position */
+        position: fixed;
+        width: calc(320px - 2 * var(--page-general-padding) );
+        bottom: calc(6/8 * var(--nav-tablet-height));
+        padding-bottom: 0;
+        padding-left: 0;
+        height: calc(var(--footer-height)*2/3);
+    }
+    section div { /* Changed Style for Better Space */
+        max-width: 90%;
+    }
+
+
+    /* Navbar Styling */
+    .site-header { /* Added Style to Change Size of Nav/Header */
+        flex-direction: row;
+        width: var(--nav-tablet-width);
+        height: var(--nav-tablet-height);
+        position: fixed;
+        top: calc(100vh - var(--nav-tablet-height));
+        align-items: center;
+        border: 0;
+        border-top: 0.1rem dashed var(--primary-color);
+    }
+    .logo { /* Smaller Logo */
+        width: 50px;
+        height: 50px;
+        top: calc(-1 * var(--nav-tablet-height) + 50px);
+        right: 10px;
+    }
+    .nav-list { /* Added Style to Space Items in Relation to Eachother */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+    section figure { /* Changed with context of tablet sizing and under */
+        max-width: calc(100vw - var(--page-general-padding) - var(--image-tablet-width));
+        max-height: calc((100vw - var(--page-general-padding) - var(--image-tablet-width)) * 9 / 16);
+    }
+    section figure a img { /* Changed with context of tablet sizing and under */
+        width: calc(100vw - var(--page-general-padding) - var(--image-tablet-width));
+        height: calc((100vw - var(--page-general-padding) - var(--image-tablet-width)) * 9 / 16);
+    }
+
+}
