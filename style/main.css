@@ -1,3 +1,17 @@
+/*
+    --- List of Contents ---
+    # General Styling
+    # Card Styling
+    # Nav Styling
+
+*/
+
+/*
+    -------------------------
+    --- # General Styling ---
+    -------------------------
+*/
+/* Variables */
 :root {
     /* Color Palette */
     --primary-color: #F6F3ED;
@@ -21,67 +35,38 @@
     --image-tablet-width: 20vw;
 
 }
-
-
-/* General Styling */
-body { /* <body> Tag Styling */
-    background: var(--primary-color);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+/* Basic reset for consistent styling */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: var(--primary-contrast-color);
-    font-size: clamp(0.8rem, 1vw, 1rem);;
+}
+@font-face {
+    font-family: 'Outfit';
+    src: url('../media/Outfit.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Outfit', sans-serif;
+}
+body { /* <body> Tag Styling */
+    background-color: var(--primary-color);
 }
 main { /* <main> Tag Styling */
-    position: relative;
-    padding: var(--page-general-padding);
-    padding-left:  calc(var(--page-general-padding) + var(--main-desktop-left-padding));
-    min-height: 100vh;
+    line-height: 1.5;
 
-}
-section { /* <section> Tag Styling */
-    width: 100%;
-}
-section h1,section h2,section h3,section h4 { /* <h1> Tag Styling Inside of <section> Tag*/
-    text-align: center;
-}
-section figure { /* <figure> Tag Styling Inside of <section> Tag*/
-    text-align: center;
-    margin: auto;
-    max-width: calc(100vw - var(--page-general-padding) - var(--image-desktop-width));
-    max-height: calc((100vw - var(--page-general-padding) - var(--image-desktop-width)) * 9 / 16);
-    position: relative;
-    border: 2px solid var(--primary-contrast-color);
-    border-radius: 20px;
-    overflow: hidden;
-}
-section figure a img { /* <img> Tag Styling Inside of <a>, <figure>, <section> Tag*/
-    width: calc(100vw - var(--page-general-padding) - var(--image-desktop-width));
-    height: calc((100vw - var(--page-general-padding) - var(--image-desktop-width)) * 9 / 16);
-}
-section figure figcaption { /* <figcaption> Tag Styling Inside of <figure>, <section> Tag*/
-    position: absolute;
-    z-index: 4;
-    bottom: clamp(0.4rem, 1vw, 1rem);
-    right: clamp(0.4rem, 1vw, 1rem);
-    background-color: var(--primary-color);
-    color: var(--primary-contrast-color);
-    border: 2px solid var(--primary-contrast-color);
-    border-radius: 10px;
-    padding-left: 1rem;
-    padding-right: 0.6rem;
-    font-size: clamp(0.8rem, 1vw, 1.2rem);
 }
 a { /* <a> Tag Styling */
     text-decoration: none;
-    color: var(--secondary-constrast-color);
+    color: var(--secondary-color);
     font-weight: bold;
     transition: color 0.2s ease;
 }
 a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
-    color: var(--secondary-color);
+    color: var(--secondary-constrast-color);
     text-decoration: underline;
 }
 footer { /* <footer> Tag Styling */
@@ -94,144 +79,313 @@ footer { /* <footer> Tag Styling */
     z-index: 5;
     color: var(--primary-color);
 }
-header { /* <header> Tag Styling */
+/* grid */
+.grid {
+    margin: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    grid-gap: 10px;
+}
+.grid-item {
+    padding: 10px;
+    border: 1px solid var(--primary-contrast-color);
+}
+.grid-item2 {
+    padding: 10px;
+    border: 1px solid var(--primary-contrast-color);
+    grid-column: span 2;
+}
+.grid-item3 {
+    padding: 10px;
+    border: 1px solid var(--primary-contrast-color);
+    grid-column: span 3;
+}
+/* Media Query for Narrow Viewports (Mobile Portrait) */
+@media (max-width: 600px) {
+    .grid {
+        margin: 10px;
+        grid-template-columns: 1fr;
+    }
+    .grid-item2,
+    .grid-item3 {
+        grid-column: span 1;
+    }
+}
+/* Media Query for Wide Viewports (16:9) */
+@media (min-width: 601px) and (max-width: 1200px) {
+    .grid {
+        grid-template-columns: 2fr;
+    }
+    .grid-item2,
+    .grid-item3 {
+        grid-column: span 1;
+    }
+}
+/* Media Query for Ultrawide Viewports (21:9) */
+@media (min-width: 1201px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-item2 {
+        grid-column: span 2;
+    }
+    .grid-item3 {
+        grid-column: span 3;
+    }
+}
+
+/*
+    ----------------------
+    --- # Card Styling ---
+    ----------------------
+*/
+/*
+    Serves as the main container for the card element.
+    It uses flex layout, enabling easy alignment and distribution of child elements.
+    The border and border-radius properties give it a defined look with rounded corners.
+    overflow: hidden prevents any child elements from extending beyond the card's boundaries, while margin: 20px provides spacing around the card.
+*/
+.card {
     position: relative;
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px;
+    background-color: white;
+    max-width: 100%;
 }
-section div,span,p { /* <div>, <span> and <p> Tag Styling */
-    padding: 0.5rem;
+/*
+    Class acts as a flex container for the image and caption, aligning its children in a horizontal row.
+*/
+.card-figure {
+    display: flex;
 }
-section div { /* <div> Tag Styling Inside of <section>*/
-    margin: auto;
-    max-width: 40%;
+/*
+    Defines a fixed width for the image, maintaining consistency across cards.
+    The min-height ensures that the height accommodates the image and additional spacing for "pinning" and "extending",
+    while height: auto allows for the container to extend alongside the text.
+*/
+.card-figure-image {
+    width: 150px;
+    min-height: calc(150px + 24px * 3); /* Image height + extend height*/
+    height: auto;
+    background-color: var(--primary-color);
 }
+/*
+    Targets the specific image within the card figure.
+    It sets a fixed width and height, ensuring that the image remains contained within its designated space.
+    The object-fit: cover property allows the image to fill the area while preserving its aspect ratio,
+    cropping as necessary to prevent distortion.
+*/
+.card-figure-image #fig-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+/*
+    Caption for the card is styled with padding to provide space around the text.
+    The flex-grow: 1 property allows it to expand and fill any available space in the flex container.
+    The overflow: hidden property is used to clip any overflowing text,
+    while max-height is calculated to show only a limited number of lines before truncation occurs.
+*/
+.card-figure-caption {
+    padding: 20px;
+    flex-grow: 1; /* Allow caption to take remaining space */
+    overflow: hidden;
+    max-height: calc(4.5em * 2); /* Limit height to show approximately 3 lines */
+    position: relative;
+    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+    display: -webkit-box; /* Required for line clamping */
+    -webkit-box-orient: vertical; /* Required for line clamping */
+    -webkit-line-clamp: calc(3 * 2); /* Show up to 3 lines before truncation */
+    transition: max-height 0.5s ease-in-out;
+}
+/*
+    On hover, the caption expands to reveal the full content, with the max-height set to 1000px,
+    which effectively removes the height restriction.
+    The use of overflow: hidden prevents a scrollbar from appearing, while -webkit-line-clamp: unset removes the line limit,
+    allowing the full text to be visible.
+*/
+.card-figure-caption:hover,
+.card-figure-expand:hover ~ .card-figure-caption,
+#toggle-expand:checked ~ .card-figure-caption{
+    max-height: 1000px;
+    overflow: hidden;
+    -webkit-line-clamp: unset;
+}
+/*
+    The toggle element is a checkbox that controls the expansion of the caption. It has no default appearance, making it customizable.
+    When the checkbox is checked, the background color changes to the secondary color.
+*/
+#toggle-expand {
+    appearance: none;
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-color: var(--primary-color);
+    border-right: 2px solid var(--primary-contrast-color);
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    pointer-events: none;
 
-
-/* Navbar Styling */
-.site-header { /* .site-header Class Styling as part of <header>*/
-    background: var(--primary-contrast-color);
+}
+#toggle-expand:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
     height: 100%;
-    width: var(--nav-desktop-width);
-    position: fixed;
+}
+#toggle-expand:checked {
+    background-color: var(--secondary-color);
+}
+/*
+     Positions the expand button relative to the card.
+     Using absolute positioning, it places the button directly below the image, centered horizontally.
+*/
+.card-figure-expand {
+    position: absolute;
+    top: calc(150px); /*Image height*/
+    left: calc((150px - 24px * 3) /2); /*image width minus expand width divided by 2 to center position relative to image above it*/
+    width: calc(24px * 3);
+    height: calc(24px * 3);
+}
+/*
+    Both images serve as icons for expanding or interacting with the card.
+    They are absolutely positioned to fill their container completely
+*/
+#fig-expand, #fig-expand-hover {
+    position: absolute;
     top: 0;
     left: 0;
-    display: flex;
-    flex-direction: column;
-    z-index: 5;
-    border-right: 0.1rem dashed var(--primary-color);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
 }
+/*
+    When hovering over the expand button or when the checkbox is checked,
+    the opacity of the normal expand icon (#fig-expand) is set to 0,
+    while the hover icon (#fig-expand-hover) becomes fully opaque.
+*/
+#fig-expand-hover,
+.card-figure-expand:hover #fig-expand,
+#toggle-expand:checked + .toggle-label #fig-expand{
+    opacity: 0;
+}
+#fig-expand,
+.card-figure-expand:hover #fig-expand-hover,
+#toggle-expand:checked + .toggle-label #fig-expand-hover{
+    opacity: 1;
+}
+#toggle-expand:checked + .toggle-label #fig-expand-hover{
+    filter: brightness(0) saturate(100%);
+}
+/*
+    Text inside of caption.
+*/
+.card-figure-caption p {
+    margin: 0;
+}
+/*
+    Refrence/source link of caption.
+*/
+.card-figure-caption-link {
+    margin-top: auto; /* Positioned at bottom */
+}
+
+
+
+
+
+
+
+
+/*
+    ---------------------
+    --- # Nav Styling ---
+    ---------------------
+*/
+/* Site Header */
+.site-header { /* .site-header Class Styling as part of <header>*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-contrast-color); /* Light gray background */
+    border-bottom: 2px solid #ddd; /* border for separation */
+    width: 100%;
+}
+
+/* Logo + Current Site */
+.logo { /* .logo Class Styling Inside of .site-header */
+    max-width: 100px;    /* Set the maximum width of the container */
+    max-height: 100px;   /* Set the maximum height of the container */
+    width: 100%;           /* Make container responsive */
+    height: auto;          /* Keep aspect ratio */
+    overflow: hidden;   /* Hide overflow if the image exceeds the container */
+}
+.logo img {
+    max-width: 100%;       /* Image will scale within the container width */
+    max-height: 100%;      /* Image will scale within the container height */
+    width: auto;           /* Maintains aspect ratio */
+    height: auto;          /* Maintains aspect ratio */
+    object-fit: contain;   /* Ensures the entire image fits within the container */
+}
+
+/* Navigation Bar*/
 .navbar { /* .site-header Class Styling Inside of <nav>*/
-    position: sticky;
-    top: 0;
-    flex-grow: 1;
-    z-index: 11;
+    display: flex;
+    margin-right: 50px;
 }
 .nav-list { /* .nav-list Class Styling Inside of .navbar */
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    gap: 20px; /* Space between nav items */
+    list-style: none;
 }
 .nav-item { /* .nav-item Class Styling Inside of .nav-list */
-    flex-shrink: 1;
-    padding-bottom: 0;
+    text-align: center;
 }
 .nav-link { /* .nav-link Class Styling Inside of .nav-item */
     color: var(--primary-color);
     text-decoration: none;
-    display: block;
-    padding: 1rem;
-    padding-bottom: 0;
+    font-size: 1em;
+    padding: 5px 10px;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 .site-current { /* .site-current Class Styling Inside of .site-header */
-    padding: 1rem;
-    padding-bottom: 0;
+    font-size: 1.2em;
     color: var(--secondary-color);
+    flex-grow: 1;
+    text-align: center;
+    font-weight: bold;
 }
 .nav-item:hover .nav-link { /* .site-item Class Styling When hovered Change .nav-link */
     color: var(--secondary-color);
-}
-.logo { /* .logo Class Styling Inside of .site-header */
-    background: url("../media/left-logo-transparent.png");
-    background-size: contain; /* or 'cover', depending on your need */
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: -40px;
-    right: 20;
-    transform: rotate(50deg);
-    z-index: -1;
+    background-color: #f0f0f0; /* hover background */
+    border-radius: 4px;
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Phone/Tablet Styling */
-@media only screen and (max-width: 767px) {
-    /* General Styling */
-    main {
-        padding: 0;
-    }
-    main > :last-child { /* Added Style Spacing to Bottom to Avoid Navbar Being Infront */
-        padding-bottom: calc(var(--nav-tablet-height) + 50px);
-    }
-    footer { /* Added Style to Change Position */
-        position: fixed;
-        width: calc(320px - 2 * var(--page-general-padding) );
-        bottom: calc(6/8 * var(--nav-tablet-height));
-        padding-bottom: 0;
-        padding-left: 0;
-        height: calc(var(--footer-height)*2/3);
-    }
-    section div { /* Changed Style for Better Space */
-        max-width: 90%;
+/* Phone/Tablet Styling | Nav Styling*/
+@media (max-width: 768px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
+    .site-current {
+        text-align: left;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
 
-    /* Navbar Styling */
-    .site-header { /* Added Style to Change Size of Nav/Header */
-        flex-direction: row;
-        width: var(--nav-tablet-width);
-        height: var(--nav-tablet-height);
-        position: fixed;
-        top: calc(100vh - var(--nav-tablet-height));
-        align-items: center;
-        border: 0;
-        border-top: 0.1rem dashed var(--primary-color);
-    }
-    .logo { /* Smaller Logo */
-        width: 50px;
-        height: 50px;
-        top: calc(-1 * var(--nav-tablet-height) + 50px);
-        right: 10px;
-    }
-    .nav-list { /* Added Style to Space Items in Relation to Eachother */
-        display: flex;
-        flex-direction: row;
+    .nav-list {
+        gap: 15px;
         flex-wrap: wrap;
-        justify-content: center;
-        padding: 0;
-    }
-    section figure { /* Changed with context of tablet sizing and under */
-        max-width: calc(100vw - var(--page-general-padding) - var(--image-tablet-width));
-        max-height: calc((100vw - var(--page-general-padding) - var(--image-tablet-width)) * 9 / 16);
-    }
-    section figure a img { /* Changed with context of tablet sizing and under */
-        width: calc(100vw - var(--page-general-padding) - var(--image-tablet-width));
-        height: calc((100vw - var(--page-general-padding) - var(--image-tablet-width)) * 9 / 16);
-    }
 
+    }
+    .navbar {
+        margin-right: 0; /* Remove the right-side gap on smaller screens */
+
+    }
 }
