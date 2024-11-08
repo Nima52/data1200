@@ -164,8 +164,6 @@ footer { /* <footer> Tag Styling */
     The border and border-radius properties give it a defined look with rounded corners.
     overflow: hidden prevents any child elements from extending beyond the card's boundaries, while margin: 20px provides spacing around the card.
 
-    ToDo:
-        -  fix #fig-expand-hover to have pin be able to take an image without changing html syntax, which is done animation/transition on that will not then effect the element itself.
 */
 .card {
     position: relative;
@@ -224,7 +222,7 @@ footer { /* <footer> Tag Styling */
     transition: max-height 0.5s ease-in-out;
 }
 /*
-    On hover, the caption expands to reveal the full content, with the max-height set to 1000px,
+    On hover, the caption expands to reveal the full content, with the max-height set to 100%,
     which effectively removes the height restriction.
     The use of overflow: hidden prevents a scrollbar from appearing, while -webkit-line-clamp: unset removes the line limit,
     allowing the full text to be visible.
@@ -232,13 +230,14 @@ footer { /* <footer> Tag Styling */
 .card-figure-caption:hover,
 .card-figure-expand:hover ~ .card-figure-caption,
 #toggle-expand:checked ~ .card-figure-caption{
-    max-height: 1000px;
+    max-height: 100%;
     overflow: hidden;
     -webkit-line-clamp: unset;
 }
 /*
     The toggle element is a checkbox that controls the expansion of the caption. It has no default appearance, making it customizable.
     When the checkbox is checked, the background color changes to the secondary color.
+
 */
 #toggle-expand {
     appearance: none;
@@ -273,6 +272,7 @@ footer { /* <footer> Tag Styling */
 /*
     Both images serve as icons for expanding or interacting with the card.
     They are absolutely positioned to fill their container completely
+
 */
 #fig-expand, #fig-expand-hover {
     position: absolute;
@@ -280,19 +280,35 @@ footer { /* <footer> Tag Styling */
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
     transition: opacity 0.3s ease;
     cursor: pointer;
 }
 /*
     When hovering over the expand button hover, it emphasizes that it is clickable.
 */
+.fig-expand-hover-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../media/weirdcircle.png") center no-repeat;
+    background-size: contain;  /* Adjust size of the image */
+    animation: rotateBackground 5s linear infinite;
+}
+#toggle-expand:checked + .toggle-label .fig-expand-hover-wrapper::before,
+.fig-expand-hover-wrapper:hover::before {
+    background: none;
+}
+
 @keyframes rotateBackground {
     0% {
-        background-position: 0 0;
+        transform: rotate(0deg);
     }
     100% {
-        background-position: 100% 100%;
+        transform: rotate(360deg);
     }
 }
 #fig-expand-hover {
@@ -301,13 +317,6 @@ footer { /* <footer> Tag Styling */
             linear-gradient(165deg, rgba(233,13,44,0.5) 20%, rgba(9,12,18,1) 40%, rgba(246,243,237,0.8) 60%, rgba(22,242,211,0.4) 70%),
             url("../media/dirt.jpg"),
             url("../media/weirdcircle.png"); /**/
-
-    background: url("../media/weirdcircle.png");
-    background-size: contain;  /* Adjust size of the image */
-    background-repeat: no-repeat;  /* Prevent repetition */
-    background-position: center;  /* Center the image */
-    animation: rotateBackground 5s linear infinite;
-
 }
 #fig-expand-hover:hover {
     /* border: 5px solid black; /**/
