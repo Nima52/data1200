@@ -11,44 +11,16 @@
     -------------------------
     --- # General Styling ---
     -------------------------
+    ToDo:
+        - Fix comments on #General Styling
 */
 /* Variables */
 :root {
     /* Color Palette */
-    /*
-        Special use case rules:
-        --primary-color
-
-        --primary-contrast-color
-            - surrounding Button elements | color
-
-        --secondary-color
-            - Button | color
-
-        --secondary-constrast-color
-            - Button | hover
-    */
     --primary-color: #F6F3ED;
     --primary-contrast-color: #090c12;
     --secondary-color: #E90D2C;
     --secondary-constrast-color: #16f2d3;
-
-    /* Universal Variables */
-    --footer-height:50px;
-    --page-general-padding:1rem;
-
-    /* Desktop Variables */
-    --nav-desktop-width: 250px;
-    --main-desktop-left-padding: var(--nav-desktop-width);
-    --image-desktop-width: 40vw;
-
-    /* Tablet Variables */
-    --nav-tablet-width: 100vw;
-    --main-tablet-left-padding: 0;
-    --nav-tablet-height:100px;
-    --image-tablet-width: 20vw;
-
-    /* Button Variables*/
 
 }
 /* Basic reset for consistent styling */
@@ -73,7 +45,6 @@ body { /* <body> Tag Styling */
 }
 main { /* <main> Tag Styling */
     line-height: 1.5;
-
 }
 a { /* <a> Tag Styling */
     text-decoration: none;
@@ -84,16 +55,6 @@ a { /* <a> Tag Styling */
 a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
     color: var(--secondary-constrast-color);
     text-decoration: underline;
-}
-footer { /* <footer> Tag Styling */
-    height: var(--footer-height);
-    width:  calc(var(--nav-desktop-width) - var(--nav-desktop-width)/4);
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    padding: var(--page-general-padding);
-    z-index: 5;
-    color: var(--primary-color);
 }
 /* grid */
 .grid {
@@ -287,6 +248,9 @@ footer { /* <footer> Tag Styling */
 /*
     When hovering over the expand button hover, it emphasizes that it is clickable.
     Uses ::before pseudo class as part of wrapper (can't be used directly on img) to rotate image without anything else being effected.
+
+    ToDo:
+        - remove artifact/fragment code
 */
 .fig-expand-hover-wrapper::before {
     content: "";
@@ -399,6 +363,8 @@ footer { /* <footer> Tag Styling */
     ---------------------
     - # Credits Styling -
     ---------------------
+    ToDo:
+        - Fix comments on #Credits Styling
 */
 
 .footer {
@@ -465,8 +431,8 @@ footer { /* <footer> Tag Styling */
 
 /* Dont like style, change! */
 /*
-To do:
-- do not forget download of exam paper
+    ToDo:
+        - do not forget download of exam paper as a button/option
 */
 .footer-gadgets {
     position: fixed;
@@ -543,10 +509,10 @@ To do:
 /*
 header is inner layer which holds general logo and such and nav is outer
 
-
-To do:
-- make img look like banner by adding block to the top and a stick that attaches to it
--- this can be the underline, but needs aspects that makes it look like a stick
+    ToDo:
+        - Fix comments on #Nav Styling
+        - make img look like banner by adding block to the top and a stick that attaches to it
+        -- this can be the underline, but needs aspects that makes it look like a stick
 */
 body {
     position: relative;
@@ -638,12 +604,11 @@ body {
 
 /* Navigation Bar*/
 /*
-    To do:
-    - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
-    could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
-
-    - The polepost, can be the one that has to go to top button, which is the top sign. then current -1 is the left and right side is current +1
-    -- how does one do if logic then? or keep memory if itself and siblings? maybe if e.g. number 3 is checked and that means 4 and 2 will automatically be targeted (hardcoded)
+    ToDo:
+        - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
+        -- could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
+        - The polepost, can be the one that has to go to top button, which is the top sign. then current -1 is the left and right side is current +1
+        -- how does one do if logic then? or keep memory if itself and siblings? maybe if e.g. number 3 is checked and that means 4 and 2 will automatically be targeted (hardcoded)
 */
 :root {
     --underline-height: .5em;
