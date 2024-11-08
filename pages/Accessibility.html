@@ -2,9 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility</title>
+    <link rel="stylesheet" href="..\style\main.css"> <!--Stylesheet refrence-->
+    <link rel="icon" href="../media/logo.ico" type="image/x-icon"> <!--Favicon refrence-->
 </head>
 <body>
+
+<!-- Site Header -->
+<header class="auxiliary-header">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <input type="checkbox" id="nav-1" disabled>
+                <label for="nav-1" class="">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="nav-item">
+                <input type="checkbox" id="nav-2" disabled checked>
+                <label for="nav-2" class="">
+                    <a href="./Accessibility.html" class="nav-link">Accessibility</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="nav-item">
+                <input type="checkbox" id="nav-3" disabled>
+                <label for="nav-3" class="">
+                    <a href="./Activity%20Page.html" class="nav-link">Activity Page</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="nav-item">
+                <input type="checkbox" id="nav-4" disabled>
+                <label for="nav-4" class="">
+                    <a href="./GitHub.html" class="nav-link">GitHub</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Logo + Current Site  -->
+    <div class="main-header">
+
+        <h1 class="site-current" >
+            <svg viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
+                <path id="line" d="M 0 30 Q 100 0 200 30" stroke="none" stroke-width="2" fill="none"/>
+
+                <text font-size="8" fill="red">
+                    <textPath href="#line" startOffset="50%" text-anchor="middle">
+                        Accessibility Page
+                    </textPath>
+                </text>
+            </svg>
+        </h1>
+
+        <div class="header-element">
+            <svg class="arrow-left" width="40" height="80" viewBox="0 0 14 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 0 L0 30 L14 60" stroke="red" stroke-width="2" fill="none" />
+            </svg>
+            <div class="logo">
+                <img src="../media/oslomet-high-resolution-logo-grayscale-transparent.png"  alt="Image of logo" >
+            </div>
+            <svg class="arrow-right" width="40" height="80" viewBox="0 0 14 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0 L14 30 L0 60" stroke="red" stroke-width="2" fill="none" />
+            </svg>
+        </div>
+
+    </div>
+
+
+</header>
+
+
+
+
+
 
 </body>
 </html>

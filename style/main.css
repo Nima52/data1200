@@ -286,6 +286,7 @@ footer { /* <footer> Tag Styling */
 }
 /*
     When hovering over the expand button hover, it emphasizes that it is clickable.
+    Uses ::before pseudo class as part of wrapper (can't be used directly on img) to rotate image without anything else being effected.
 */
 .fig-expand-hover-wrapper::before {
     content: "";
