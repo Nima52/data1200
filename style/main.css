@@ -2,7 +2,8 @@
     --- List of Contents ---
     # General Styling
     # Card Styling
-    # Nav Styling
+    # Credits Styling (footer)
+    # Nav Styling (header)
 
 */
 
@@ -14,6 +15,19 @@
 /* Variables */
 :root {
     /* Color Palette */
+    /*
+        Special use case rules:
+        --primary-color
+
+        --primary-contrast-color
+            - surrounding Button elements | color
+
+        --secondary-color
+            - Button | color
+
+        --secondary-constrast-color
+            - Button | hover
+    */
     --primary-color: #F6F3ED;
     --primary-contrast-color: #090c12;
     --secondary-color: #E90D2C;
@@ -33,6 +47,8 @@
     --main-tablet-left-padding: 0;
     --nav-tablet-height:100px;
     --image-tablet-width: 20vw;
+
+    /* Button Variables*/
 
 }
 /* Basic reset for consistent styling */
@@ -81,7 +97,10 @@ footer { /* <footer> Tag Styling */
 }
 /* grid */
 .grid {
-    margin: 50px;
+    margin-top: 2%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 5%;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
     grid-gap: 10px;
@@ -144,6 +163,9 @@ footer { /* <footer> Tag Styling */
     It uses flex layout, enabling easy alignment and distribution of child elements.
     The border and border-radius properties give it a defined look with rounded corners.
     overflow: hidden prevents any child elements from extending beyond the card's boundaries, while margin: 20px provides spacing around the card.
+
+    ToDo:
+        -  fix #fig-expand-hover to have pin be able to take an image without changing html syntax, which is done animation/transition on that will not then effect the element itself.
 */
 .card {
     position: relative;
@@ -263,6 +285,47 @@ footer { /* <footer> Tag Styling */
     cursor: pointer;
 }
 /*
+    When hovering over the expand button hover, it emphasizes that it is clickable.
+*/
+@keyframes rotateBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+#fig-expand-hover {
+    /* transition: border 0.3s ease-in; /**/
+    /* background:
+            linear-gradient(165deg, rgba(233,13,44,0.5) 20%, rgba(9,12,18,1) 40%, rgba(246,243,237,0.8) 60%, rgba(22,242,211,0.4) 70%),
+            url("../media/dirt.jpg"),
+            url("../media/weirdcircle.png"); /**/
+
+    background: url("../media/weirdcircle.png");
+    background-size: contain;  /* Adjust size of the image */
+    background-repeat: no-repeat;  /* Prevent repetition */
+    background-position: center;  /* Center the image */
+    animation: rotateBackground 5s linear infinite;
+
+}
+#fig-expand-hover:hover {
+    /* border: 5px solid black; /**/
+    /* border-radius: 15px; /**/
+
+}
+#fig-expand-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Example overlay color */
+    mix-blend-mode: multiply; /* Ensures the color only affects non-transparent areas */
+    z-index: 1;  /* Ensures the overlay appears above the background */
+}
+/*
     When hovering over the expand button or when the checkbox is checked,
     the opacity of the normal expand icon (#fig-expand) is set to 0,
     while the hover icon (#fig-expand-hover) becomes fully opaque.
@@ -290,14 +353,176 @@ footer { /* <footer> Tag Styling */
     Refrence/source link of caption.
 */
 .card-figure-caption-link {
-    margin-top: auto; /* Positioned at bottom */
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 24px;
+    margin-right: 24px;
+    color: var(--secondary-color); /* For dash */
+    font-size: 24px; /* For dash */
+    font-weight: bold; /* For dash */
+}
+.card-figure-caption-link a {
+    font-size: 24px;
+}
+.card-figure-caption-link span {
+    position: relative;
+}
+.card-figure-caption-link span img {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+}
+.card-figure-caption-link:hover span img {
+    filter: brightness(0) saturate(100%);
+}
+.card-figure-caption-link:hover {
+    color: var(--primary-contrast-color); /* For dash */
 }
 
 
 
 
+/*
+    ---------------------
+    - # Credits Styling -
+    ---------------------
+*/
+
+.footer {
+
+}
+.credit-links {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%);
+    padding: 1em 0.5em 1em 1em;
+    background: var(--primary-color);
+    border-radius: 0.5em 0 0 0.5em;
+    box-shadow: -4px 0px 0px var(--secondary-constrast-color);
+    transition: all 300ms ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.credit-links:hover {
+    box-shadow: -8px 0px 20px var(--secondary-constrast-color);
+    padding: 1em;
+}
+.credit-header {
+    color: var(--primary-contrast-color);
+}
+.footer-link {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+.footer-link a {
+    color: var(--primary-contrast-color);
+    font-size: 1.5rem;
+    transition: all 200ms ease;
+    width: 24px;
+    height: 24px;
+}
+.footer-link a:hover {
+    color: var(--secondary-constrast-color);
+    font-size: 1.75rem;
+}
+.footer-link a img {
+    width: 100%;
+    height: 100%;
+}
+.credit-face {
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.credit-face img{
+    width: 100%;
+    height: 100%;
+}
 
 
+/* Dont like style, change! */
+/*
+To do:
+- do not forget download of exam paper
+*/
+.footer-gadgets {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translatex(-50%);
+    padding: 1em 1em 0.5em 1em;
+    background: var(--primary-color);
+    border-radius: 0.5em 0.5em 0 0;
+    box-shadow: 0px -4px 0px var(--secondary-color);
+    transition: all 300ms ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-gadgets:hover {
+    box-shadow: 0px -8px 20px var(--secondary-color);
+    padding: 1em;
+}
+.gadget-header {
+    color: var(--primary-contrast-color);
+}
+.gadget-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+.gadget-link {
+    list-style: none;
+    gap: 1rem;
+    padding: 5px;
+    padding-bottom: 0;
+    color: var(--secondary-color); /* For dash */
+    font-size: 24px; /* For dash */
+    font-weight: bold; /* For dash */
+}
+.gadget-link a {
+    color: var(--secondary-color);
+    font-size: 24px;
+    transition: all 200ms ease;
+}
+.gadget-link a:hover {
+    color: var(--secondary-constrast-color);
+}
+.gadget-link span {
+    position: relative;
+}
+.gadget-link span img {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+}
+.gadget-link a span img {
+    width: 16px;
+    height: 16px;
+    filter: invert(17%) sepia(73%) saturate(7448%) hue-rotate(346deg) brightness(92%) contrast(99%);
+}
+.gadget-link a:hover span img {
+    filter: none;
+}
+.gadget-link:hover {
+    color: var(--primary-contrast-color); /* For dash */
+}
 
 
 /*
@@ -305,87 +530,243 @@ footer { /* <footer> Tag Styling */
     --- # Nav Styling ---
     ---------------------
 */
-/* Site Header */
-.site-header { /* .site-header Class Styling as part of <header>*/
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--primary-contrast-color); /* Light gray background */
-    border-bottom: 2px solid #ddd; /* border for separation */
-    width: 100%;
-}
+/*
+header is inner layer which holds general logo and such and nav is outer
 
-/* Logo + Current Site */
+
+To do:
+- make img look like banner by adding block to the top and a stick that attaches to it
+-- this can be the underline, but needs aspects that makes it look like a stick
+*/
+body {
+    position: relative;
+}
+:root {
+    --header-outer-height: 300px;
+    --header-inner-height: 185px;
+    --header-height-difference: calc(
+            var(--header-outer-height) - var(--header-inner-height)
+    );
+    /* Page color distinctions for color awareness in relation to each other*/
+    --page-1-distinction: blue; /* Home page */
+    --page-2-distinction: orange; /* Accessibility page */
+    --page-3-distinction: green; /* Activity page */
+    --page-4-distinction: brown; /* Github page */
+}
+/* inner header (the one that dissepears) that holds nav*/
+.auxiliary-header {
+
+    position: sticky;
+    height: var(--header-outer-height);
+    top: calc(var(--header-height-difference) * -1); /* space for nav + cutting off so that it acheives the paralax*/
+
+    background-color: var(--primary-contrast-color);
+
+    border-radius: 0 0 85% 85% / 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 10; /* above other created elements in main*/
+
+}
+/*outer header, which cuts off and acheives paralax*/
+.main-header {
+    position: sticky;
+    height: var(--header-inner-height);
+    top: 0;
+
+    background-color: var(--primary-contrast-color);
+    width: 100%;
+
+    border-radius: 0 0 85% 85% / 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+/* Logo + added auxilary items and styling */
 .logo { /* .logo Class Styling Inside of .site-header */
     max-width: 100px;    /* Set the maximum width of the container */
     max-height: 100px;   /* Set the maximum height of the container */
-    width: 100%;           /* Make container responsive */
-    height: auto;          /* Keep aspect ratio */
     overflow: hidden;   /* Hide overflow if the image exceeds the container */
+    border-radius: 0 0 85% 85% / 30%;
 }
 .logo img {
-    max-width: 100%;       /* Image will scale within the container width */
-    max-height: 100%;      /* Image will scale within the container height */
-    width: auto;           /* Maintains aspect ratio */
-    height: auto;          /* Maintains aspect ratio */
-    object-fit: contain;   /* Ensures the entire image fits within the container */
+    width: 100%;       /* Image will scale within the container width */
+    height: 100%;      /* Image will scale within the container height */
+
+}
+.site-current {
+    display: flex;
+    justify-content: center;
+
+}
+.site-current svg{
+    width: 100%;
+    height: 100%;
+}
+.arrow-left {
+    padding: 10px;
+}
+.arrow-left svg {
+
+}
+.arrow-right {
+    padding: 10px;
+}
+.arrow-right svg {
 }
 
+
+
 /* Navigation Bar*/
-.navbar { /* .site-header Class Styling Inside of <nav>*/
-    display: flex;
-    margin-right: 50px;
+/*
+    To do:
+    - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
+    could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
+
+    - The polepost, can be the one that has to go to top button, which is the top sign. then current -1 is the left and right side is current +1
+    -- how does one do if logic then? or keep memory if itself and siblings? maybe if e.g. number 3 is checked and that means 4 and 2 will automatically be targeted (hardcoded)
+*/
+:root {
+    --underline-height: .5em;
+    --transition-duration : .5s;
+    --page-count: 4; /* how many pages in total there are*/
 }
-.nav-list { /* .nav-list Class Styling Inside of .navbar */
+/* nav Styling */
+.navbar {
     display: flex;
-    gap: 20px; /* Space between nav items */
+    flex-wrap: wrap;
+    position: relative;
+    height: calc(var(--header-height-difference) / 2); /* specific height that accounts for paralax spacing of inner header (main-header)*/
+    width: 100%;
+    justify-content: center;
+
+
+    padding-bottom: var(--underline-height); /*for underline*/
+    margin-bottom: 2em; /*for underline*/
+}
+.nav-list {
     list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Space items evenly across full width */
+    width: 100%;
 }
 .nav-item { /* .nav-item Class Styling Inside of .nav-list */
     text-align: center;
+    width: 100%;
+    background-color: var(--primary-contrast-color);
 }
+/* distinct and general styling for anchor tag*/
 .nav-link { /* .nav-link Class Styling Inside of .nav-item */
     color: var(--primary-color);
     text-decoration: none;
     font-size: 1em;
-    padding: 5px 10px;
-    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 1em 0;
+    transition: color 0.3s ease;
+    font-family: 'Outfit', sans-serif;
 }
-.site-current { /* .site-current Class Styling Inside of .site-header */
-    font-size: 1.2em;
-    color: var(--secondary-color);
-    flex-grow: 1;
-    text-align: center;
-    font-weight: bold;
+.nav-item:hover .nav-link {
+    color: lightcoral;
+    transition: color 0.2s ease-in-out;
+  /* background-color: #f0f0f0; /* hover background */
+  /* border-radius: 4px; /**/
+    animation: colorTransition 1.2s forwards;
 }
-.nav-item:hover .nav-link { /* .site-item Class Styling When hovered Change .nav-link */
-    color: var(--secondary-color);
-    background-color: #f0f0f0; /* hover background */
-    border-radius: 4px;
+@keyframes colorTransition {
+    0% {
+        color: lightcoral;
+    }
+    100% {
+        color: var(--secondary-color);
+    }
 }
 
+.nav-item:has(#nav-1:checked) .nav-link:hover{
+    text-decoration-color: var(--page-1-distinction);
+}
+.nav-item:has(#nav-2:checked) .nav-link:hover{
+    text-decoration-color: var(--page-2-distinction);
+}
+.nav-item:has(#nav-3:checked) .nav-link:hover{
+    text-decoration-color: var(--page-3-distinction);
+}
+.nav-item:has(#nav-4:checked) .nav-link:hover{
+    text-decoration-color: var(--page-4-distinction);
+}
 
+/* hiding checkbox logic (logic for dynamic operations of the nav and other)*/
+#nav-1,
+#nav-2,
+#nav-3,
+#nav-4{
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+/* underline styling*/
+.underline {
+    position: relative;
+    height: var(--underline-height);
+    width: 100%;
+    overflow: hidden;
+    background: var(--primary-contrast-color) !important;
+    border-radius: 10px;
+}
+.color-layer { /* Change to take the options of old underline, height, width, etc*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform var(--transition-duration) ease-in-out;
+}
+.start-color {
+    transition: transform calc(var(--transition-duration) * 1) ease-in-out;
+}
+.middle-color {
+    transition: transform calc(var(--transition-duration) * 1.4) ease-in-out;
+}
+.end-color {
+    transition: transform calc(var(--transition-duration) * 1.8) ease-in-out;
+}
+/*underline animation styling*/
+.nav-item input:checked + label .underline .start-color{
+    background-color: lightcoral ;
+}
+.nav-item:has(#nav-1:checked) .underline .middle-color{
+    background-color: var(--page-1-distinction);
+}
+.nav-item:has(#nav-2:checked) .underline .middle-color{
+    background-color: var(--page-2-distinction);
+}
+.nav-item:has(#nav-3:checked) .underline .middle-color{
+    background-color: var(--page-3-distinction);
+}
+.nav-item:has(#nav-4:checked) .underline .middle-color{
+    background-color: var(--page-4-distinction);
+}
+.nav-item input:checked + label .underline .end-color{
+    background-color: var(--primary-color);
+}
+.nav-item:hover .nav-link + .underline .color-layer{
+    transform: translateX(100%); /* Hover effect for the nav-link */
+}
 
-/* Phone/Tablet Styling | Nav Styling*/
-@media (max-width: 768px) {
-    .site-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+/* default coloring of other underline locations other than current one*/
 
-    .site-current {
-        text-align: left;
-        font-size: 1.1em;
-        margin-bottom: 10px;
-    }
-
-    .nav-list {
-        gap: 15px;
-        flex-wrap: wrap;
-
-    }
-    .navbar {
-        margin-right: 0; /* Remove the right-side gap on smaller screens */
-
-    }
+#nav-1:not(:checked) + label .underline,
+#nav-2:not(:checked) + label .underline,
+#nav-3:not(:checked) + label .underline,
+#nav-4:not(:checked) + label .underline {
+    background: var(--primary-contrast-color);
 }
