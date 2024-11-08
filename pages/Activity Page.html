@@ -10,32 +10,93 @@
 
 <body>
 
+<div id="page-top"></div> <!-- Invisable placeholder -->
+
 <!-- Site Header -->
-<header class="site-header">
-    <!-- Logo + Current Site -->
-    <div class="logo">
-        <img src="../media/oslomet-high-resolution-logo-grayscale-transparent.png"  alt="Image of logo" >
-    </div>
-    <h1 class="site-current">Activity Page | Trust control and digitization time</h1>
+<header class="auxiliary-header">
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="../index.html" class="nav-link">Home</a>
+                <input type="checkbox" id="nav-1" disabled>
+                <label for="nav-1" class="">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
             </li>
             <li class="nav-item">
-                <a href="./Accessibility.html" class="nav-link">Accessibility</a>
+                <input type="checkbox" id="nav-2" disabled>
+                <label for="nav-2" class="">
+                    <a href="./Accessibility.html" class="nav-link">Accessibility</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
             </li>
             <li class="nav-item">
-                <a href="./Activity%20Page.html" class="nav-link">Activity Page</a>
+                <input type="checkbox" id="nav-3" disabled checked>
+                <label for="nav-3" class="">
+                    <a href="./Activity%20Page.html" class="nav-link">Activity Page</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
             </li>
             <li class="nav-item">
-                <a href="./GitHub.html" class="nav-link">GitHub</a>
+                <input type="checkbox" id="nav-4" disabled>
+                <label for="nav-4" class="">
+                    <a href="./GitHub.html" class="nav-link">GitHub</a>
+                    <div class="underline">
+                        <div class="color-layer start-color"></div>
+                        <div class="color-layer middle-color"></div>
+                        <div class="color-layer end-color"></div>
+                    </div>
+                </label>
             </li>
-
         </ul>
     </nav>
+
+    <!-- Logo + Current Site  -->
+    <div class="main-header">
+
+        <h1 class="site-current" >
+            <svg viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
+                <path id="line" d="M 0 30 Q 100 0 200 30" stroke="none" stroke-width="2" fill="none"/>
+
+                <text font-size="8" fill="red">
+                    <textPath href="#line" startOffset="50%" text-anchor="middle">
+                        Activity Page | Trust control and digitization time
+                    </textPath>
+                </text>
+            </svg>
+        </h1>
+
+        <div class="header-element">
+            <svg class="arrow-left" width="40" height="80" viewBox="0 0 14 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 0 L0 30 L14 60" stroke="red" stroke-width="2" fill="none" />
+            </svg>
+            <div class="logo">
+                <img src="../media/oslomet-high-resolution-logo-grayscale-transparent.png"  alt="Image of logo" >
+            </div>
+            <svg class="arrow-right" width="40" height="80" viewBox="0 0 14 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0 L14 30 L0 60" stroke="red" stroke-width="2" fill="none" />
+            </svg>
+        </div>
+
+    </div>
+
+
 </header>
+
+
 
 <!--Main content-->
 <main class="grid">
@@ -55,7 +116,9 @@
                 <input type="checkbox" id="toggle-expand">
                 <label for="toggle-expand" class="toggle-label card-figure-expand">
                     <img id="fig-expand" src="../media/more_horiz_24px.png" alt="expand image">
-                    <img id="fig-expand-hover" src="../media/keep_24px.png" alt="pin image">
+                    <div class="fig-expand-hover-wrapper">
+                        <img id="fig-expand-hover" src="../media/keep_24px.png" alt="pin image">
+                    </div>
                 </label>
 
                 <figcaption class="card-figure-caption">
@@ -69,7 +132,7 @@
                         <a href="https://x.com/AFI_forskning/status/1765662991586902082" target="_blank" rel="external">
                             AFI - OsloMet
                             <span>
-                                <img src="../media/open_in_new_16px.png">
+                                <img src="../media/open_in_new_24px.png">
                             </span>
                         </a>
                     </span>
@@ -93,8 +156,56 @@
 
 
 <!-- Footer Content -->
-<footer class="">
-    <p class="">&copy; 2024 <b>Exam DATA1200</b>. All rights reserved.</p>
+<footer class="footer">
+    <div class="footer-gadgets">
+        <h6 class="gadget-header">Sidebar Tool(s)</h6>
+        <ul class="gadget-items">
+            <li class="gadget-link">
+                ~
+                <a href="#page-top">
+                    To top
+                    <span>
+                        <img src="../media/arrow-up.svg" alt="arrow-up">
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <aside class="credit-links">
+        <h6 class="credit-header">Devs</h6>
+        <ul>
+            <li class="footer-link">
+                <div class="credit-face">
+                    <img src="../media/nima.png" alt="face-nima">
+                </div>
+                <div class="credit-face">
+                    <img src="../media/julian.jpeg" alt="face-julian">
+                </div>
+            </li>
+            <li class="footer-link">
+                <a href="https://x.com/ProsaicVoyager" target="_blank">
+                    <img src="../media/twitter.svg" alt="x-nima">
+                </a>
+                <a href="https://linkedin.com/in/julian-valle-31a2501bb" target="_blank">
+                    <img src="../media/linkedin.svg" alt="x-julian">
+                </a>
+            </li>
+            <li class="footer-link">
+                <a href="https://github.com/Nima52" target="_blank">
+                    <img src="../media/github.svg" alt="github-nima">
+                </a>
+                <a href="https://github.com/cobra4001" target="_blank">
+                    <img src="../media/github.svg" alt="github-julian">
+                </a>
+            </li>
+            <li class="footer-link">
+                <a href="mailto:nimkam52@gmail.com" target="_blank">
+                    <img src="../media/mail.svg" alt="github-nima">
+                </a>
+            </li>
+        </ul>
+    </aside>
 </footer>
 
 
