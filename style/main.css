@@ -13,6 +13,11 @@
     -------------------------
     ToDo:
         - Fix comments on #General Styling
+        - make ".headline" for general headlines and replace index.html
+        - make ".list" for general list and replace index.html
+        -- have a general version that takes it's children and makes it rows
+        -- same for column, just point out that normal is columned. But have it be generally made, so it uses child node.
+        - make ".centered" for general centered text and such and replace index.html
 */
 /* Variables */
 :root {
@@ -365,6 +370,10 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
     ---------------------
     ToDo:
         - Fix comments on #Credits Styling
+        - Fix proper img sizing and coloring.
+.square:is(:hover, :focus) {
+  transform: scale(1.5) rotate(135deg);
+}
 */
 
 .footer {
@@ -429,10 +438,11 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
 }
 
 
-/* Dont like style, change! */
 /*
     ToDo:
         - do not forget download of exam paper as a button/option
+        -- change to the sidebar
+        - change the top button be for banner that comes out
 */
 .footer-gadgets {
     position: fixed;
@@ -512,7 +522,9 @@ header is inner layer which holds general logo and such and nav is outer
     ToDo:
         - Fix comments on #Nav Styling
         - make img look like banner by adding block to the top and a stick that attaches to it
-        -- this can be the underline, but needs aspects that makes it look like a stick
+        -- this can be the underline, but needs aspects that makes it look like a stick.
+        --- Either somehow trace the image (transparent color inverted image, mby) of a stick or use fill or a font
+        -  Add mask/texture to the black background to add some depth. Use "dirt.jpg"
 */
 body {
     position: relative;
@@ -523,11 +535,30 @@ body {
     --header-height-difference: calc(
             var(--header-outer-height) - var(--header-inner-height)
     );
-    /* Page color distinctions for color awareness in relation to each other*/
-    --page-1-distinction: blue; /* Home page */
-    --page-2-distinction: orange; /* Accessibility page */
-    --page-3-distinction: green; /* Activity page */
-    --page-4-distinction: brown; /* Github page */
+
+    /*
+        Page color distinctions for color awareness in relation to each other.
+        The amount of distinctions should also match --page-count.
+    */
+    --page-1-distinction: #000fff; /* Home page */
+    --page-1-distinction-rgb: 0, 15, 255;
+    --page-2-distinction: #00ff55; /* Accessibility page */
+    --page-2-distinction-rgb: 0, 255, 85;
+    --page-3-distinction: #FFC300; /* Activity page */
+    --page-3-distinction-rgb: 255, 195, 0;
+    --page-4-distinction: #a84a00; /* Github page */
+    --page-4-distinction-rgb: 168, 74, 0;
+
+    /*
+        Z-axis variables for depth effects.
+        The amount of distinctions should also match --page-count.
+    */
+    --page-1-depth-axis: 1; /* Home page */
+    --page-2-depth-axis: 2; /* Accessibility page */
+    --page-3-depth-axis: 3; /* Activity page */
+    --page-4-depth-axis: 4; /* Github page */
+
+    /* NB some calculation of 90 deg / 2 between here and negative*/
 }
 /* inner header (the one that dissepears) that holds nav*/
 .auxiliary-header {
@@ -536,7 +567,13 @@ body {
     height: var(--header-outer-height);
     top: calc(var(--header-height-difference) * -1); /* space for nav + cutting off so that it acheives the paralax*/
 
-    background-color: var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color); /* Fallback Color */
+
+    background: url("../media/rock.jpg");
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: left top;
+
 
     border-radius: 0 0 85% 85% / 30%;
     display: flex;
@@ -552,7 +589,7 @@ body {
     height: var(--header-inner-height);
     top: 0;
 
-    background-color: var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color); /* Fallback Color */
     width: 100%;
 
     border-radius: 0 0 85% 85% / 30%;
@@ -561,11 +598,19 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 .header-element {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
+    /* width: xxx; /* */
 
+}
+/* Wrapper class to keep center elements in the middle. Also for seperation of concerns.*/
+.header-element-center-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 /* Logo + added auxilary items and styling */
 .logo { /* .logo Class Styling Inside of .site-header */
@@ -579,6 +624,23 @@ body {
     height: 100%;      /* Image will scale within the container height */
 
 }
+/*
+    Styling for poles that are placed at start and end of header-element. Page 1, 2 and 4 does not have .pole
+*/
+.pole{
+    height: var(--header-height-difference);
+    transition: box-shadow 0.3s ease;
+}
+.auxiliary-header:has(#nav-3:checked) .pole {
+    box-shadow: 0px 3px 1px -2px rgba(var(--page-3-distinction-rgb), 0.5);
+}
+.auxiliary-header:has(#nav-3:checked) .pole:hover { /* Could eventually make it navigate to the adjacent page, via js */
+    box-shadow: 0px 8px 3px -3px rgba(var(--page-3-distinction-rgb), 0.8);
+    transform: scale(1.015) translateY(-1px);
+}
+
+
+
 .site-current {
     display: flex;
     justify-content: center;
@@ -607,26 +669,25 @@ body {
     ToDo:
         - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
         -- could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
-        - The polepost, can be the one that has to go to top button, which is the top sign. then current -1 is the left and right side is current +1
-        -- how does one do if logic then? or keep memory if itself and siblings? maybe if e.g. number 3 is checked and that means 4 and 2 will automatically be targeted (hardcoded)
+        -- bookmark style/object is button to go to top (button)
 */
 :root {
-    --underline-height: .5em;
-    --transition-duration : .5s;
-    --page-count: 4; /* how many pages in total there are*/
+    --underline-height: .5em; /* Animated underline height. Or rather, space needed from parent. */
+    --transition-duration : .5s; /* Animated duration. */
+    --page-count: 4; /* Total amount of page(s) in website. */
 }
 /* nav Styling */
 .navbar {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    height: calc(var(--header-height-difference) / 2); /* specific height that accounts for paralax spacing of inner header (main-header)*/
+    height: calc(var(--header-height-difference) / 2); /* Specific height that accounts for paralax spacing of inner header (main-header)*/
     width: 100%;
     justify-content: center;
 
 
-    padding-bottom: var(--underline-height); /*for underline*/
-    margin-bottom: 2em; /*for underline*/
+    padding-bottom: var(--underline-height); /* For underline */
+    margin-bottom: 2em; /* For underline */
 }
 .nav-list {
     list-style: none;
@@ -639,7 +700,7 @@ body {
 .nav-item { /* .nav-item Class Styling Inside of .nav-list */
     text-align: center;
     width: 100%;
-    background-color: var(--primary-contrast-color);
+    /* background-color: var(--primary-contrast-color); /**/
 }
 /* distinct and general styling for anchor tag*/
 .nav-link { /* .nav-link Class Styling Inside of .nav-item */
@@ -668,18 +729,25 @@ body {
 
 .nav-item:has(#nav-1:checked) .nav-link:hover{
     text-decoration-color: var(--page-1-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-2:checked) .nav-link:hover{
     text-decoration-color: var(--page-2-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-3:checked) .nav-link:hover{
     text-decoration-color: var(--page-3-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-4:checked) .nav-link:hover{
     text-decoration-color: var(--page-4-distinction);
+    text-decoration-thickness: 3px;
 }
-
-/* hiding checkbox logic (logic for dynamic operations of the nav and other)*/
+/*
+    Underline animation goes "Opened" position to closed when hovered. On the way back, when it is no longer hovered,
+    it will have a trailing effect depending on which page it is at (using dynamic so called logical operations and color awareness).
+*/
+/* Hiding of checkbox logic (logic for dynamic operations of the nav and other elements that are targeted) */
 #nav-1,
 #nav-2,
 #nav-3,
@@ -688,22 +756,22 @@ body {
     position: absolute;
     pointer-events: none;
 }
-/* underline styling*/
+/* Underline styling and animation */
 .underline {
     position: relative;
     height: var(--underline-height);
     width: 100%;
     overflow: hidden;
-    background: var(--primary-contrast-color) !important;
+    /* background: var(--primary-contrast-color) !important; /**/
     border-radius: 10px;
 }
-.color-layer { /* Change to take the options of old underline, height, width, etc*/
+.color-layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100%; /* ToDo: Have some Added padding, but then would also need to change alot of other elements/styling to accomodate for it.*/
     height: 100%;
-    transition: transform var(--transition-duration) ease-in-out;
+    transition: transform var(--transition-duration) ease-in-out; /* ToDo:  Somehow activate the transition in reverse on page load. Might need to create a new element or wrap it.*/
 }
 .start-color {
     transition: transform calc(var(--transition-duration) * 1) ease-in-out;
@@ -714,7 +782,10 @@ body {
 .end-color {
     transition: transform calc(var(--transition-duration) * 1.8) ease-in-out;
 }
-/*underline animation styling*/
+.nav-item:hover .nav-link + .underline .color-layer{
+    transform: translateX(100%); /* Hover effect for the nav-link */
+}
+/* Underline distinct and general coloring */
 .nav-item input:checked + label .underline .start-color{
     background-color: lightcoral ;
 }
@@ -731,17 +802,12 @@ body {
     background-color: var(--page-4-distinction);
 }
 .nav-item input:checked + label .underline .end-color{
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
-.nav-item:hover .nav-link + .underline .color-layer{
-    transform: translateX(100%); /* Hover effect for the nav-link */
-}
-
-/* default coloring of other underline locations other than current one*/
-
+/* Default coloring of other underline locations other than current one */
 #nav-1:not(:checked) + label .underline,
 #nav-2:not(:checked) + label .underline,
 #nav-3:not(:checked) + label .underline,
 #nav-4:not(:checked) + label .underline {
-    background: var(--primary-contrast-color);
+    /* background: var(--primary-contrast-color); /**/
 }
