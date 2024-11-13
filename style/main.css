@@ -27,6 +27,9 @@
     --secondary-color: #E90D2C;
     --secondary-constrast-color: #16f2d3;
 
+    /* General Styling Variables */
+    --general-border-radius: 10px;
+
 }
 /* Basic reset for consistent styling */
 *,
@@ -48,75 +51,97 @@ h1,h2,h3,h4,h5,h6 {
 body { /* <body> Tag Styling */
     background-color: var(--primary-color);
 }
-main { /* <main> Tag Styling */
-    line-height: 1.5;
-}
 a { /* <a> Tag Styling */
     text-decoration: none;
     color: var(--secondary-color);
     font-weight: bold;
     transition: color 0.2s ease;
 }
-a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
+a:is(:hover, :focus, :active) { /* <a> Tag Styling On Click And Hover*/
     color: var(--secondary-constrast-color);
     text-decoration: underline;
 }
-/* grid */
-.grid {
-    margin-top: 2%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-bottom: 5%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-    grid-gap: 10px;
+main {
+    padding: 2rem clamp(1rem, 10vw, 20vw); /* Responsive side gaps */ /*ToDo: Have some padding that has ideal to be aligned in the middle of first page anchor*/
+    width: 100vw;
 }
-.grid-item {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
+.video {
+    max-width: 100%;
+    margin: auto 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
-.grid-item2 {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
-    grid-column: span 2;
+.video video {
+    width: 100%;
+    height: auto;
+    border-radius: var(--general-border-radius);
+    border: 2px solid var(--primary-contrast-color);
 }
-.grid-item3 {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
-    grid-column: span 3;
+.video-caption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
 }
-/* Media Query for Narrow Viewports (Mobile Portrait) */
-@media (max-width: 600px) {
-    .grid {
-        margin: 10px;
-        grid-template-columns: 1fr;
-    }
-    .grid-item2,
-    .grid-item3 {
-        grid-column: span 1;
-    }
+.headline {
+    margin: 1.25rem auto;
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform:uppercase;
 }
-/* Media Query for Wide Viewports (16:9) */
-@media (min-width: 601px) and (max-width: 1200px) {
-    .grid {
-        grid-template-columns: 2fr;
-    }
-    .grid-item2,
-    .grid-item3 {
-        grid-column: span 1;
-    }
+.headline:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: 0.25rem;
+    width: 42px;
+    margin-bottom: 1.25rem;
 }
-/* Media Query for Ultrawide Viewports (21:9) */
-@media (min-width: 1201px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-item2 {
-        grid-column: span 2;
-    }
-    .grid-item3 {
-        grid-column: span 3;
-    }
+.list { /*Always applied on ul element and li elements are its children*/
+    position: relative;
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: var(--general-border-radius);
+    box-shadow: 0.5rem 0.5rem 0 0 var(--primary-contrast-color);
+    border: 2px solid var(--primary-contrast-color);
+    margin: 2rem 0;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+.list .list{ /* List inside list */
+    border: none;
+    box-shadow: none;
+    margin: 1rem;
+    padding: 0.5rem;
+}
+.list-header {
+    margin: 1.25rem 0;
+    text-transform:uppercase;
+}
+.list-header:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: 0.25rem;
+    width: 30vw;
+}
+.list li:not(.list-header) {
+    margin: 0.1rem 2rem;
+}
+.list.row-direction {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.list.row-direction .list-header {
+    flex: 1 1 100%; /* Ensure the header occupies the full first row */
+}
+.centered {
+    padding: 2rem clamp(1rem, 10vw, 20vw);
 }
 
 /*
@@ -169,6 +194,43 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
     height: 150px;
     object-fit: cover;
 }
+/*
+    ToDo: commenting
+
+    This class is if one wants to use a headline instead of a image.
+*/
+.card-figure-headline {
+    overflow: hidden;
+    min-width: 30%;
+    max-width: 40%;
+    background-color: var(--primary-color);
+}
+.card-figure-headline-header {
+    margin: 1.25rem auto;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-transform:uppercase;
+}
+.card-figure-headline-header:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: 0.25rem;
+    width: 42px;
+    margin-bottom: 1.25rem;
+}
+/* non default positioning of card when using headline instead of image */
+.card-figure:has(.card-figure-headline-header) .card-figure-expand { /*ToDo: take a look at toggle-label to see why positioning is weird*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(24px * 3);
+    height: calc(24px * 3);
+}
+/*ToDo: also have some other representation of data inside card when it is with ".card-figure-headline-header", so it does not look wonky*/
+
+
 /*
     Caption for the card is styled with padding to provide space around the text.
     The flex-grow: 1 property allows it to expand and fill any available space in the flex container.
@@ -370,10 +432,6 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
     ---------------------
     ToDo:
         - Fix comments on #Credits Styling
-        - Fix proper img sizing and coloring.
-.square:is(:hover, :focus) {
-  transform: scale(1.5) rotate(135deg);
-}
 */
 
 .footer {
@@ -387,7 +445,7 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
     padding: 1em 0.5em 1em 1em;
     background: var(--primary-color);
     border-radius: 0.5em 0 0 0.5em;
-    box-shadow: -4px 0px 0px var(--secondary-constrast-color);
+    box-shadow: -4px 0px 0px var(--secondary-color);
     transition: all 300ms ease;
     display: flex;
     flex-direction: column;
@@ -413,14 +471,13 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
 }
 .footer-link a {
     color: var(--primary-contrast-color);
-    font-size: 1.5rem;
     transition: all 200ms ease;
     width: 24px;
     height: 24px;
 }
 .footer-link a:hover {
-    color: var(--secondary-constrast-color);
-    font-size: 1.75rem;
+    filter: invert(77%) sepia(51%) saturate(683%) hue-rotate(110deg) brightness(95%) contrast(100%);
+    transform: scale(1.1);
 }
 .footer-link a img {
     width: 100%;
@@ -439,79 +496,6 @@ a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
 
 
 /*
-    ToDo:
-        - do not forget download of exam paper as a button/option
-        -- change to the sidebar
-        - change the top button be for banner that comes out
-*/
-.footer-gadgets {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
-    transform: translatex(-50%);
-    padding: 1em 1em 0.5em 1em;
-    background: var(--primary-color);
-    border-radius: 0.5em 0.5em 0 0;
-    box-shadow: 0px -4px 0px var(--secondary-color);
-    transition: all 300ms ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.footer-gadgets:hover {
-    box-shadow: 0px -8px 20px var(--secondary-color);
-    padding: 1em;
-}
-.gadget-header {
-    color: var(--primary-contrast-color);
-}
-.gadget-items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-}
-.gadget-link {
-    list-style: none;
-    gap: 1rem;
-    padding: 5px;
-    padding-bottom: 0;
-    color: var(--secondary-color); /* For dash */
-    font-size: 24px; /* For dash */
-    font-weight: bold; /* For dash */
-}
-.gadget-link a {
-    color: var(--secondary-color);
-    font-size: 24px;
-    transition: all 200ms ease;
-}
-.gadget-link a:hover {
-    color: var(--secondary-constrast-color);
-}
-.gadget-link span {
-    position: relative;
-}
-.gadget-link span img {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-}
-.gadget-link a span img {
-    width: 16px;
-    height: 16px;
-    filter: invert(17%) sepia(73%) saturate(7448%) hue-rotate(346deg) brightness(92%) contrast(99%);
-}
-.gadget-link a:hover span img {
-    filter: none;
-}
-.gadget-link:hover {
-    color: var(--primary-contrast-color); /* For dash */
-}
-
-
-/*
     ---------------------
     --- # Nav Styling ---
     ---------------------
@@ -525,6 +509,7 @@ header is inner layer which holds general logo and such and nav is outer
         -- this can be the underline, but needs aspects that makes it look like a stick.
         --- Either somehow trace the image (transparent color inverted image, mby) of a stick or use fill or a font
         -  Add mask/texture to the black background to add some depth. Use "dirt.jpg"
+        - do not forget download of exam paper as a button/option, seperate by line.
 */
 body {
     position: relative;
@@ -569,7 +554,7 @@ body {
 
     background-color: var(--primary-contrast-color); /* Fallback Color */
 
-    background: url("../media/rock.jpg");
+    /* background: url("../media/rock.jpg"); /* ToDo: a img should only be on the Activity Page*/
     background-repeat: repeat;
     background-size: auto;
     background-position: left top;
@@ -654,12 +639,13 @@ body {
     padding: 10px;
 }
 .arrow-left svg {
-
+    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
 }
 .arrow-right {
     padding: 10px;
 }
 .arrow-right svg {
+    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
 }
 
 
