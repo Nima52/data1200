@@ -11,44 +11,51 @@
     -------------------------
     --- # General Styling ---
     -------------------------
+    ToDo:
+        - Fix comments on #General Styling
+        - Make sure scaling works on all viewports
+        - Check to see if works on all browsers
 */
 /* Variables */
 :root {
     /* Color Palette */
-    /*
-        Special use case rules:
-        --primary-color
-
-        --primary-contrast-color
-            - surrounding Button elements | color
-
-        --secondary-color
-            - Button | color
-
-        --secondary-constrast-color
-            - Button | hover
-    */
     --primary-color: #F6F3ED;
     --primary-contrast-color: #090c12;
     --secondary-color: #E90D2C;
     --secondary-constrast-color: #16f2d3;
 
-    /* Universal Variables */
-    --footer-height:50px;
-    --page-general-padding:1rem;
+    /* General Styling Variables */
+    --general-border-radius: 10px;
+    --general-space-small-n1: 4px; /* Formula: 4*small-n1 */
+    --general-space-small-n2: 8px; /* Formula: 4*small-n2 */
+    --general-space-small-n3: 12px; /* Formula: 4*small-n3 */
+    --general-space-small-n4: 16px; /* Formula: 4*small-n4 */
+    --general-space-small-n5: 20px; /* Formula: 4*small-n5 */
+    --general-space-big-n1: 27px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n1) */
+    --general-space-big-n2: 36px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n2) */
+    --general-space-big-n3: 49px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n3) */
+    --general-space-big-n4: 66px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n4) */
+    --general-space-big-n5: 89px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n5) */
 
-    /* Desktop Variables */
-    --nav-desktop-width: 250px;
-    --main-desktop-left-padding: var(--nav-desktop-width);
-    --image-desktop-width: 40vw;
+    /* Font and margin sizes */
+    font-size: 20px;
+    --primary-font: "Outfit";
+    --fallback-font: sans-serif;
+    --margin-xxs: 0.25rem; /* Formula: small-n1/16 */
+    --margin-s: 0.75rem; /* Formula: small-n3/16 */
+    --margin-m: 1.47rem; /* Formula: ((small-n5 + big-n1)/2)/16 */
+    --margin-l: 3.06rem; /* Formula: big-n3/16 */
+    --margin-xxl: 5.56rem; /* Formula: big-n5 /16 */
+    --underline-margin-x: 0%;
+    --headline-line-width: var(--general-space-big-n3);
+    --headline-line-height: var(--margin-xxs);
+    /*
+        Middle of the first anchor element line by it's count (--page-count),
+        accounting for subtraction of half of headline element line (--headline-line-width) so both align.
+        Also accounts for if the underline (--underline-margin-y) of the anchor tag is trimmed.
+    */
+    --page-spacing: calc( var(--underline-margin-x) + ((100% / var(--page-count)) / 2 ) - (var(--headline-line-width) / 2) );
 
-    /* Tablet Variables */
-    --nav-tablet-width: 100vw;
-    --main-tablet-left-padding: 0;
-    --nav-tablet-height:100px;
-    --image-tablet-width: 20vw;
-
-    /* Button Variables*/
 
 }
 /* Basic reset for consistent styling */
@@ -60,20 +67,16 @@
     padding: 0;
 }
 @font-face {
-    font-family: 'Outfit';
-    src: url('../media/Outfit.ttf') format('truetype');
+    font-family: "Outfit";
+    src: url("../media/Outfit.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 h1,h2,h3,h4,h5,h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--primary-font), var(--fallback-font);
 }
 body { /* <body> Tag Styling */
     background-color: var(--primary-color);
-}
-main { /* <main> Tag Styling */
-    line-height: 1.5;
-
 }
 a { /* <a> Tag Styling */
     text-decoration: none;
@@ -81,77 +84,115 @@ a { /* <a> Tag Styling */
     font-weight: bold;
     transition: color 0.2s ease;
 }
-a:hover, a:active { /* <a> Tag Styling On Click And Hover*/
+a:is(:hover, :focus, :active) { /* <a> Tag Styling On Click And Hover*/
     color: var(--secondary-constrast-color);
     text-decoration: underline;
 }
-footer { /* <footer> Tag Styling */
-    height: var(--footer-height);
-    width:  calc(var(--nav-desktop-width) - var(--nav-desktop-width)/4);
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    padding: var(--page-general-padding);
-    z-index: 5;
-    color: var(--primary-color);
+main {
+    padding: var(--margin-m) var(--page-spacing); /* Responsive side gaps */
+
 }
-/* grid */
-.grid {
-    margin-top: 2%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-bottom: 5%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-    grid-gap: 10px;
+.video {
+    max-width: 100%;
+    margin: auto 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
-.grid-item {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
+.video video {
+    width: 100%;
+    height: auto;
+    border-radius: var(--general-border-radius);
+    border: 2px solid var(--primary-contrast-color);
 }
-.grid-item2 {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
-    grid-column: span 2;
+.video-caption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
 }
-.grid-item3 {
-    padding: 10px;
-    border: 1px solid var(--primary-contrast-color);
-    grid-column: span 3;
+.headline {
+    margin: var(--margin-m) 0;
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform:uppercase;
+    z-index: var(--page-3-depth-axis); /* z-index for .line */
+    position: relative; /* relative for .line */
 }
-/* Media Query for Narrow Viewports (Mobile Portrait) */
-@media (max-width: 600px) {
-    .grid {
-        margin: 10px;
-        grid-template-columns: 1fr;
-    }
-    .grid-item2,
-    .grid-item3 {
-        grid-column: span 1;
-    }
+.headline p {
+    background-color: var(--primary-color); /* to cut of styling for .line by parent z-axis*/
 }
-/* Media Query for Wide Viewports (16:9) */
-@media (min-width: 601px) and (max-width: 1200px) {
-    .grid {
-        grid-template-columns: 2fr;
-    }
-    .grid-item2,
-    .grid-item3 {
-        grid-column: span 1;
-    }
+.headline:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: var(--headline-line-height);
+    width: var(--headline-line-width);
+    margin-bottom: var(--margin-m);
 }
-/* Media Query for Ultrawide Viewports (21:9) */
-@media (min-width: 1201px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-item2 {
-        grid-column: span 2;
-    }
-    .grid-item3 {
-        grid-column: span 3;
-    }
+/*
+    Line that connects styling accent colors, takes use of other element(s) z-index.
+    mentioned on specific elements where it is used by, e.g. "z-index for .line"
+*/
+.line-wrapper {
+    position: relative;
 }
+#left-line { /* ToDo: Make right sides version, with .headline just line that I can place anywhere and is general.*/
+    position: absolute;
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    width: var(--margin-xxs);
+    height: calc(var(--general-space-big-n5) * 4);
+    top: 0;
+    left: calc(var(--headline-line-width) / 2 ); /* Middle of .headline */
+    z-index: var(--page-2-depth-axis);
+}
+.list { /*Always applied on ul element and li elements are its children*/
+    position: relative;
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: var(--general-border-radius);
+    box-shadow: 0.5rem 0.5rem 0 0 var(--primary-contrast-color);
+    border: 2px solid var(--primary-contrast-color);
+    margin: 2rem 0;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+.list .list{ /* List inside list */
+    border: none;
+    box-shadow: none;
+    margin: 1rem;
+    padding: 0.5rem;
+}
+.list-header {
+    margin: var(--margin-m) 0;
+    text-transform:uppercase;
+}
+.list-header:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: var(--margin-xxs);
+    width: 30vw;
+}
+.list li:not(.list-header) {
+    margin: 0.1rem 2rem;
+}
+.list.row-direction {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.list.row-direction .list-header {
+    flex: 1 1 100%; /* Ensure the header occupies the full first row */
+}
+.centered {
+    padding: 2rem clamp(1rem, 10vw, 20vw);
+}
+
 
 /*
     ----------------------
@@ -203,6 +244,50 @@ footer { /* <footer> Tag Styling */
     height: 150px;
     object-fit: cover;
 }
+/*
+    ToDo: commenting
+
+    This class is if one wants to use a headline instead of a image.
+*/
+.card-figure-headline {
+    overflow: hidden;
+    min-width: 30%;
+    max-width: 40%;
+    background-color: var(--primary-color);
+}
+.card-figure-headline-header {
+    margin: var(--margin-m) auto;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.card-figure-headline-header:before {
+    content: "";
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    display: block;
+    height: 0.25rem;
+    width: var(--general-space-big-n3);
+    margin-bottom: var(--margin-m);
+}
+/* non default positioning of card when using headline instead of image */
+.card-figure:has(.card-figure-headline-header) .card-figure-expand { /*ToDo: take a look at toggle-label to see why positioning is weird*/
+    position: absolute;
+    top: 0;
+    left: clamp(calc(30% - 5%), calc(40% - 5%), calc(40% - 5%));
+    width: calc(24px * 3);
+    height: calc(24px * 3);
+}
+/* Card caption has all its elements hidden unless checked or hovered.*/
+.card-figure:has(.card-figure-headline-header) .card-figure-caption *{
+    visibility: hidden;
+}
+.card-figure:has(.card-figure-headline-header) .card-figure-caption:is(:hover, :focus, :active) *,
+.card-figure:has(.card-figure-headline-header) .card-figure-expand:is(:hover, :focus, :active) ~ .card-figure-caption *,
+.card-figure:has(.card-figure-headline-header) #toggle-expand:checked ~ .card-figure-caption *{
+    visibility: visible;
+}
+
 /*
     Caption for the card is styled with padding to provide space around the text.
     The flex-grow: 1 property allows it to expand and fill any available space in the flex container.
@@ -287,6 +372,9 @@ footer { /* <footer> Tag Styling */
 /*
     When hovering over the expand button hover, it emphasizes that it is clickable.
     Uses ::before pseudo class as part of wrapper (can't be used directly on img) to rotate image without anything else being effected.
+
+    ToDo:
+        - remove artifact/fragment code
 */
 .fig-expand-hover-wrapper::before {
     content: "";
@@ -399,6 +487,8 @@ footer { /* <footer> Tag Styling */
     ---------------------
     - # Credits Styling -
     ---------------------
+    ToDo:
+        - Fix comments on #Credits Styling
 */
 
 .footer {
@@ -412,7 +502,7 @@ footer { /* <footer> Tag Styling */
     padding: 1em 0.5em 1em 1em;
     background: var(--primary-color);
     border-radius: 0.5em 0 0 0.5em;
-    box-shadow: -4px 0px 0px var(--secondary-constrast-color);
+    box-shadow: -4px 0px 0px var(--secondary-color);
     transition: all 300ms ease;
     display: flex;
     flex-direction: column;
@@ -438,14 +528,13 @@ footer { /* <footer> Tag Styling */
 }
 .footer-link a {
     color: var(--primary-contrast-color);
-    font-size: 1.5rem;
     transition: all 200ms ease;
     width: 24px;
     height: 24px;
 }
 .footer-link a:hover {
-    color: var(--secondary-constrast-color);
-    font-size: 1.75rem;
+    filter: invert(77%) sepia(51%) saturate(683%) hue-rotate(110deg) brightness(95%) contrast(100%);
+    transform: scale(1.1);
 }
 .footer-link a img {
     width: 100%;
@@ -463,78 +552,6 @@ footer { /* <footer> Tag Styling */
 }
 
 
-/* Dont like style, change! */
-/*
-To do:
-- do not forget download of exam paper
-*/
-.footer-gadgets {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
-    transform: translatex(-50%);
-    padding: 1em 1em 0.5em 1em;
-    background: var(--primary-color);
-    border-radius: 0.5em 0.5em 0 0;
-    box-shadow: 0px -4px 0px var(--secondary-color);
-    transition: all 300ms ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.footer-gadgets:hover {
-    box-shadow: 0px -8px 20px var(--secondary-color);
-    padding: 1em;
-}
-.gadget-header {
-    color: var(--primary-contrast-color);
-}
-.gadget-items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-}
-.gadget-link {
-    list-style: none;
-    gap: 1rem;
-    padding: 5px;
-    padding-bottom: 0;
-    color: var(--secondary-color); /* For dash */
-    font-size: 24px; /* For dash */
-    font-weight: bold; /* For dash */
-}
-.gadget-link a {
-    color: var(--secondary-color);
-    font-size: 24px;
-    transition: all 200ms ease;
-}
-.gadget-link a:hover {
-    color: var(--secondary-constrast-color);
-}
-.gadget-link span {
-    position: relative;
-}
-.gadget-link span img {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-}
-.gadget-link a span img {
-    width: 16px;
-    height: 16px;
-    filter: invert(17%) sepia(73%) saturate(7448%) hue-rotate(346deg) brightness(92%) contrast(99%);
-}
-.gadget-link a:hover span img {
-    filter: none;
-}
-.gadget-link:hover {
-    color: var(--primary-contrast-color); /* For dash */
-}
-
-
 /*
     ---------------------
     --- # Nav Styling ---
@@ -543,10 +560,12 @@ To do:
 /*
 header is inner layer which holds general logo and such and nav is outer
 
-
-To do:
-- make img look like banner by adding block to the top and a stick that attaches to it
--- this can be the underline, but needs aspects that makes it look like a stick
+    ToDo:
+        - Fix comments on #Nav Styling
+        - make img look like banner by adding block to the top and a stick that attaches to it
+        -- this can be the underline, but needs aspects that makes it look like a stick.
+        --- Either somehow trace the image (transparent color inverted image, mby) of a stick or use fill or a font
+        - do not forget download of exam paper as a button/option, seperate by line.
 */
 body {
     position: relative;
@@ -557,11 +576,30 @@ body {
     --header-height-difference: calc(
             var(--header-outer-height) - var(--header-inner-height)
     );
-    /* Page color distinctions for color awareness in relation to each other*/
-    --page-1-distinction: blue; /* Home page */
-    --page-2-distinction: orange; /* Accessibility page */
-    --page-3-distinction: green; /* Activity page */
-    --page-4-distinction: brown; /* Github page */
+
+    /*
+        Page color distinctions for color awareness in relation to each other.
+        The amount of distinctions should also match --page-count.
+    */
+    --page-1-distinction: #000fff; /* Home page */
+    --page-1-distinction-rgb: 0, 15, 255;
+    --page-2-distinction: #00ff55; /* Accessibility page */
+    --page-2-distinction-rgb: 0, 255, 85;
+    --page-3-distinction: #FFC300; /* Activity page */
+    --page-3-distinction-rgb: 255, 195, 0;
+    --page-4-distinction: #a84a00; /* Github page */
+    --page-4-distinction-rgb: 168, 74, 0;
+
+    /*
+        Z-axis variables for depth effects.
+        The amount of distinctions should also match --page-count.
+    */
+    --page-1-depth-axis: 1; /* Home page */
+    --page-2-depth-axis: 2; /* Accessibility page */
+    --page-3-depth-axis: 3; /* Activity page */
+    --page-4-depth-axis: 4; /* Github page */
+
+    /* NB some calculation of 90 deg / 2 between here and negative*/
 }
 /* inner header (the one that dissepears) that holds nav*/
 .auxiliary-header {
@@ -570,14 +608,20 @@ body {
     height: var(--header-outer-height);
     top: calc(var(--header-height-difference) * -1); /* space for nav + cutting off so that it acheives the paralax*/
 
-    background-color: var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color); /* Fallback Color */
+
+    /* background: url("../media/rock.jpg"); /* ToDo: a img should only be on the Activity Page*/
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: left top;
+
 
     border-radius: 0 0 85% 85% / 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    z-index: 10; /* above other created elements in main*/
+    z-index: var(--page-4-depth-axis); /* above other created elements in main*/
 
 }
 /*outer header, which cuts off and acheives paralax*/
@@ -586,7 +630,7 @@ body {
     height: var(--header-inner-height);
     top: 0;
 
-    background-color: var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color); /* Fallback Color */
     width: 100%;
 
     border-radius: 0 0 85% 85% / 30%;
@@ -595,14 +639,22 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 .header-element {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
+    /* width: xxx; /* */
 
 }
+/* Wrapper class to keep center elements in the middle. Also for seperation of concerns.*/
+.header-element-center-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 /* Logo + added auxilary items and styling */
-.logo { /* .logo Class Styling Inside of .site-header */
+.logo { /* .logo Class Styling Inside of .site-header */ /*ToDo: whole logo should be made gray filtered when it has scrolled down. This goes for the accent colors.*/
     max-width: 100px;    /* Set the maximum width of the container */
     max-height: 100px;   /* Set the maximum height of the container */
     overflow: hidden;   /* Hide overflow if the image exceeds the container */
@@ -613,6 +665,23 @@ body {
     height: 100%;      /* Image will scale within the container height */
 
 }
+/*
+    Styling for poles that are placed at start and end of header-element. Page 1, 2 and 4 does not have .pole
+*/
+.pole{
+    height: var(--header-height-difference);
+    transition: box-shadow 0.3s ease;
+}
+.auxiliary-header:has(#nav-3:checked) .pole {
+    box-shadow: 0px 3px 1px -2px rgba(var(--page-3-distinction-rgb), 0.5);
+}
+.auxiliary-header:has(#nav-3:checked) .pole:hover { /* Could eventually make it navigate to the adjacent page, via js */
+    box-shadow: 0px 8px 3px -3px rgba(var(--page-3-distinction-rgb), 0.8);
+    transform: scale(1.015) translateY(-1px);
+}
+
+
+
 .site-current {
     display: flex;
     justify-content: center;
@@ -626,42 +695,41 @@ body {
     padding: 10px;
 }
 .arrow-left svg {
-
+    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
 }
 .arrow-right {
     padding: 10px;
 }
 .arrow-right svg {
+    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
 }
 
 
 
 /* Navigation Bar*/
 /*
-    To do:
-    - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
-    could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
-
-    - The polepost, can be the one that has to go to top button, which is the top sign. then current -1 is the left and right side is current +1
-    -- how does one do if logic then? or keep memory if itself and siblings? maybe if e.g. number 3 is checked and that means 4 and 2 will automatically be targeted (hardcoded)
+    ToDo:
+        - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
+        -- could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
+        -- bookmark style/object is button to go to top (button)
 */
 :root {
-    --underline-height: .5em;
-    --transition-duration : .5s;
-    --page-count: 4; /* how many pages in total there are*/
+    --underline-height: .5em; /* Animated underline height. Or rather, space needed from parent. */
+    --transition-duration : .5s; /* Animated duration. */
+    --page-count: 4; /* Total amount of page(s) in website. */
 }
 /* nav Styling */
 .navbar {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    height: calc(var(--header-height-difference) / 2); /* specific height that accounts for paralax spacing of inner header (main-header)*/
+    height: calc(var(--header-height-difference) / 2); /* Specific height that accounts for paralax spacing of inner header (main-header)*/
     width: 100%;
     justify-content: center;
 
 
-    padding-bottom: var(--underline-height); /*for underline*/
-    margin-bottom: 2em; /*for underline*/
+    padding-bottom: var(--underline-height); /* For underline */
+    margin-bottom: 2em; /* For underline */
 }
 .nav-list {
     list-style: none;
@@ -674,7 +742,7 @@ body {
 .nav-item { /* .nav-item Class Styling Inside of .nav-list */
     text-align: center;
     width: 100%;
-    background-color: var(--primary-contrast-color);
+    /* background-color: var(--primary-contrast-color); /**/
 }
 /* distinct and general styling for anchor tag*/
 .nav-link { /* .nav-link Class Styling Inside of .nav-item */
@@ -703,18 +771,25 @@ body {
 
 .nav-item:has(#nav-1:checked) .nav-link:hover{
     text-decoration-color: var(--page-1-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-2:checked) .nav-link:hover{
     text-decoration-color: var(--page-2-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-3:checked) .nav-link:hover{
     text-decoration-color: var(--page-3-distinction);
+    text-decoration-thickness: 3px;
 }
 .nav-item:has(#nav-4:checked) .nav-link:hover{
     text-decoration-color: var(--page-4-distinction);
+    text-decoration-thickness: 3px;
 }
-
-/* hiding checkbox logic (logic for dynamic operations of the nav and other)*/
+/*
+    Underline animation goes "Opened" position to closed when hovered. On the way back, when it is no longer hovered,
+    it will have a trailing effect depending on which page it is at (using dynamic so called logical operations and color awareness).
+*/
+/* Hiding of checkbox logic (logic for dynamic operations of the nav and other elements that are targeted) */
 #nav-1,
 #nav-2,
 #nav-3,
@@ -723,22 +798,22 @@ body {
     position: absolute;
     pointer-events: none;
 }
-/* underline styling*/
+/* Underline styling and animation */
 .underline {
     position: relative;
     height: var(--underline-height);
     width: 100%;
     overflow: hidden;
-    background: var(--primary-contrast-color) !important;
+    /* background: var(--primary-contrast-color) !important; /**/
     border-radius: 10px;
 }
-.color-layer { /* Change to take the options of old underline, height, width, etc*/
+.color-layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100%; /* ToDo: Have some Added padding, but then would also need to change alot of other elements/styling to accomodate for it.*/
     height: 100%;
-    transition: transform var(--transition-duration) ease-in-out;
+    transition: transform var(--transition-duration) ease-in-out; /* ToDo:  Somehow activate the transition in reverse on page load. Might need to create a new element or wrap it.*/
 }
 .start-color {
     transition: transform calc(var(--transition-duration) * 1) ease-in-out;
@@ -749,7 +824,10 @@ body {
 .end-color {
     transition: transform calc(var(--transition-duration) * 1.8) ease-in-out;
 }
-/*underline animation styling*/
+.nav-item:hover .nav-link + .underline .color-layer{
+    transform: translateX(100%); /* Hover effect for the nav-link */
+}
+/* Underline distinct and general coloring */
 .nav-item input:checked + label .underline .start-color{
     background-color: lightcoral ;
 }
@@ -766,17 +844,12 @@ body {
     background-color: var(--page-4-distinction);
 }
 .nav-item input:checked + label .underline .end-color{
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
-.nav-item:hover .nav-link + .underline .color-layer{
-    transform: translateX(100%); /* Hover effect for the nav-link */
-}
-
-/* default coloring of other underline locations other than current one*/
-
+/* Default coloring of other underline locations other than current one */
 #nav-1:not(:checked) + label .underline,
 #nav-2:not(:checked) + label .underline,
 #nav-3:not(:checked) + label .underline,
 #nav-4:not(:checked) + label .underline {
-    background: var(--primary-contrast-color);
+    /* background: var(--primary-contrast-color); /**/
 }
