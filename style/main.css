@@ -13,11 +13,8 @@
     -------------------------
     ToDo:
         - Fix comments on #General Styling
-        - make ".headline" for general headlines and replace index.html
-        - make ".list" for general list and replace index.html
-        -- have a general version that takes it's children and makes it rows
-        -- same for column, just point out that normal is columned. But have it be generally made, so it uses child node.
-        - make ".centered" for general centered text and such and replace index.html
+        - Make sure scaling works on all viewports
+        - Check to see if works on all browsers
 */
 /* Variables */
 :root {
@@ -29,6 +26,36 @@
 
     /* General Styling Variables */
     --general-border-radius: 10px;
+    --general-space-small-n1: 4px; /* Formula: 4*small-n1 */
+    --general-space-small-n2: 8px; /* Formula: 4*small-n2 */
+    --general-space-small-n3: 12px; /* Formula: 4*small-n3 */
+    --general-space-small-n4: 16px; /* Formula: 4*small-n4 */
+    --general-space-small-n5: 20px; /* Formula: 4*small-n5 */
+    --general-space-big-n1: 27px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n1) */
+    --general-space-big-n2: 36px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n2) */
+    --general-space-big-n3: 49px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n3) */
+    --general-space-big-n4: 66px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n4) */
+    --general-space-big-n5: 89px; /* Formula: Approximation of (small-n5)^(1 + 0.1 * big-n5) */
+
+    /* Font and margin sizes */
+    font-size: 20px;
+    --primary-font: "Outfit";
+    --fallback-font: sans-serif;
+    --margin-xxs: 0.25rem; /* Formula: small-n1/16 */
+    --margin-s: 0.75rem; /* Formula: small-n3/16 */
+    --margin-m: 1.47rem; /* Formula: ((small-n5 + big-n1)/2)/16 */
+    --margin-l: 3.06rem; /* Formula: big-n3/16 */
+    --margin-xxl: 5.56rem; /* Formula: big-n5 /16 */
+    --underline-margin-x: 0%;
+    --headline-line-width: var(--general-space-big-n3);
+    --headline-line-height: var(--margin-xxs);
+    /*
+        Middle of the first anchor element line by it's count (--page-count),
+        accounting for subtraction of half of headline element line (--headline-line-width) so both align.
+        Also accounts for if the underline (--underline-margin-y) of the anchor tag is trimmed.
+    */
+    --page-spacing: calc( var(--underline-margin-x) + ((100% / var(--page-count)) / 2 ) - (var(--headline-line-width) / 2) );
+
 
 }
 /* Basic reset for consistent styling */
@@ -40,13 +67,13 @@
     padding: 0;
 }
 @font-face {
-    font-family: 'Outfit';
-    src: url('../media/Outfit.ttf') format('truetype');
+    font-family: "Outfit";
+    src: url("../media/Outfit.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 h1,h2,h3,h4,h5,h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--primary-font), var(--fallback-font);
 }
 body { /* <body> Tag Styling */
     background-color: var(--primary-color);
@@ -62,8 +89,8 @@ a:is(:hover, :focus, :active) { /* <a> Tag Styling On Click And Hover*/
     text-decoration: underline;
 }
 main {
-    padding: 2rem clamp(1rem, 10vw, 20vw); /* Responsive side gaps */ /*ToDo: Have some padding that has ideal to be aligned in the middle of first page anchor*/
-    width: 100vw;
+    padding: var(--margin-m) var(--page-spacing); /* Responsive side gaps */
+
 }
 .video {
     max-width: 100%;
@@ -85,19 +112,41 @@ main {
     text-align: center;
 }
 .headline {
-    margin: 1.25rem auto;
+    margin: var(--margin-m) 0;
     font-size: 2rem;
     font-weight: 500;
     text-transform:uppercase;
+    z-index: var(--page-3-depth-axis); /* z-index for .line */
+    position: relative; /* relative for .line */
+}
+.headline p {
+    background-color: var(--primary-color); /* to cut of styling for .line by parent z-axis*/
 }
 .headline:before {
     content: "";
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
     display: block;
-    height: 0.25rem;
-    width: 42px;
-    margin-bottom: 1.25rem;
+    height: var(--headline-line-height);
+    width: var(--headline-line-width);
+    margin-bottom: var(--margin-m);
+}
+/*
+    Line that connects styling accent colors, takes use of other element(s) z-index.
+    mentioned on specific elements where it is used by, e.g. "z-index for .line"
+*/
+.line-wrapper {
+    position: relative;
+}
+#left-line { /* ToDo: Make right sides version, with .headline just line that I can place anywhere and is general.*/
+    position: absolute;
+    background-color: var(--secondary-color);
+    border-radius: var(--general-border-radius);
+    width: var(--margin-xxs);
+    height: calc(var(--general-space-big-n5) * 4);
+    top: 0;
+    left: calc(var(--headline-line-width) / 2 ); /* Middle of .headline */
+    z-index: var(--page-2-depth-axis);
 }
 .list { /*Always applied on ul element and li elements are its children*/
     position: relative;
@@ -119,7 +168,7 @@ main {
     padding: 0.5rem;
 }
 .list-header {
-    margin: 1.25rem 0;
+    margin: var(--margin-m) 0;
     text-transform:uppercase;
 }
 .list-header:before {
@@ -127,7 +176,7 @@ main {
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
     display: block;
-    height: 0.25rem;
+    height: var(--margin-xxs);
     width: 30vw;
 }
 .list li:not(.list-header) {
@@ -143,6 +192,7 @@ main {
 .centered {
     padding: 2rem clamp(1rem, 10vw, 20vw);
 }
+
 
 /*
     ----------------------
@@ -206,10 +256,10 @@ main {
     background-color: var(--primary-color);
 }
 .card-figure-headline-header {
-    margin: 1.25rem auto;
+    margin: var(--margin-m) auto;
     font-size: 1.8rem;
     font-weight: 500;
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 .card-figure-headline-header:before {
     content: "";
@@ -217,19 +267,26 @@ main {
     border-radius: var(--general-border-radius);
     display: block;
     height: 0.25rem;
-    width: 42px;
-    margin-bottom: 1.25rem;
+    width: var(--general-space-big-n3);
+    margin-bottom: var(--margin-m);
 }
 /* non default positioning of card when using headline instead of image */
 .card-figure:has(.card-figure-headline-header) .card-figure-expand { /*ToDo: take a look at toggle-label to see why positioning is weird*/
     position: absolute;
     top: 0;
-    right: 0;
+    left: clamp(calc(30% - 5%), calc(40% - 5%), calc(40% - 5%));
     width: calc(24px * 3);
     height: calc(24px * 3);
 }
-/*ToDo: also have some other representation of data inside card when it is with ".card-figure-headline-header", so it does not look wonky*/
-
+/* Card caption has all its elements hidden unless checked or hovered.*/
+.card-figure:has(.card-figure-headline-header) .card-figure-caption *{
+    visibility: hidden;
+}
+.card-figure:has(.card-figure-headline-header) .card-figure-caption:is(:hover, :focus, :active) *,
+.card-figure:has(.card-figure-headline-header) .card-figure-expand:is(:hover, :focus, :active) ~ .card-figure-caption *,
+.card-figure:has(.card-figure-headline-header) #toggle-expand:checked ~ .card-figure-caption *{
+    visibility: visible;
+}
 
 /*
     Caption for the card is styled with padding to provide space around the text.
@@ -508,7 +565,6 @@ header is inner layer which holds general logo and such and nav is outer
         - make img look like banner by adding block to the top and a stick that attaches to it
         -- this can be the underline, but needs aspects that makes it look like a stick.
         --- Either somehow trace the image (transparent color inverted image, mby) of a stick or use fill or a font
-        -  Add mask/texture to the black background to add some depth. Use "dirt.jpg"
         - do not forget download of exam paper as a button/option, seperate by line.
 */
 body {
@@ -565,7 +621,7 @@ body {
     flex-direction: column;
     align-items: center;
 
-    z-index: 10; /* above other created elements in main*/
+    z-index: var(--page-4-depth-axis); /* above other created elements in main*/
 
 }
 /*outer header, which cuts off and acheives paralax*/
@@ -598,7 +654,7 @@ body {
     align-items: center;
 }
 /* Logo + added auxilary items and styling */
-.logo { /* .logo Class Styling Inside of .site-header */
+.logo { /* .logo Class Styling Inside of .site-header */ /*ToDo: whole logo should be made gray filtered when it has scrolled down. This goes for the accent colors.*/
     max-width: 100px;    /* Set the maximum width of the container */
     max-height: 100px;   /* Set the maximum height of the container */
     overflow: hidden;   /* Hide overflow if the image exceeds the container */
