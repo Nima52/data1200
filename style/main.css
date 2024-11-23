@@ -13,7 +13,6 @@
     -------------------------
     ToDo:
         - Fix comments on #General Styling
-        - Make sure scaling works on all viewports
         - Check to see if works on all browsers
 */
 /* Variables */
@@ -72,11 +71,60 @@
     font-weight: normal;
     font-style: normal;
 }
+/* For phones (small screens) */
+@media (max-width: 600px) {
+    :root {
+        font-size: 16px; /* Smaller font size on phones */
+    }
+}
+
+/* For 16:9 aspect ratio screens (typical desktops) */
+@media (min-width: 601px) and (max-width: 1280px) {
+    :root {
+        font-size: 18px; /* Slightly smaller font size for 16:9 */
+    }
+}
+
+/* For ultra-wide screens (21:9) */
+@media (min-width: 1281px) and (max-width: 2000px) {
+    :root {
+        font-size: 22px; /* Larger font size for ultra-wide screens */
+    }
+}
+
+/* For very large screens (wider than 2000px) */
+@media (min-width: 2001px) {
+    :root {
+        font-size: 24px; /* Large font size for very large screens */
+    }
+}
 h1,h2,h3,h4,h5,h6 {
     font-family: var(--primary-font), var(--fallback-font);
 }
+h1 {
+    font-size: var(--margin-l);
+}
+h2 {
+    font-size: var(--margin-m);
+}
+h3 {
+    font-size: var(--margin-m);
+}
+h4 {
+    font-size: var(--margin-m);
+}
+h5 {
+    font-size: var(--margin-s);
+}
+h6 {
+    font-size: var(--margin-s);
+}
+
 body { /* <body> Tag Styling */
     background-color: var(--primary-color);
+    overflow-wrap: break-word; /* Ensure long words break and wrap onto the next line */
+    word-wrap: break-word;     /* Fallback for older browsers */
+    white-space: normal;       /* Ensure text wraps normally */
 }
 a { /* <a> Tag Styling */
     text-decoration: none;
@@ -113,13 +161,12 @@ main {
 }
 .headline {
     margin: var(--margin-m) 0;
-    font-size: 2rem;
-    font-weight: 500;
     text-transform:uppercase;
     z-index: var(--page-3-depth-axis); /* z-index for .line */
     position: relative; /* relative for .line */
 }
 .headline p {
+    font-size: 2rem;
     background-color: var(--primary-color); /* to cut of styling for .line by parent z-axis*/
 }
 .headline:before {
@@ -138,7 +185,7 @@ main {
 .line-wrapper {
     position: relative;
 }
-#left-line { /* ToDo: Make right sides version, with .headline just line that I can place anywhere and is general.*/
+#left-line {
     position: absolute;
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
@@ -160,12 +207,23 @@ main {
     display: flex;
     flex-direction: column;
     list-style: none;
+    gap: 0 1rem;
 }
 .list .list{ /* List inside list */
     border: none;
     box-shadow: none;
     margin: 1rem;
     padding: 0.5rem;
+}
+/* For phones (small screens) */
+@media (max-width: 600px) {
+    .list {
+        padding: 1rem 0.2rem;
+    }
+    .list .list {
+        padding: 0;
+        margin: 1rem 0;
+    }
 }
 .list-header {
     margin: var(--margin-m) 0;
@@ -179,8 +237,44 @@ main {
     height: var(--margin-xxs);
     width: 30vw;
 }
+.header-2 h4{
+    text-align:center;
+    text-transform:uppercase;
+    letter-spacing: var(--margin-xxs);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: var(--margin-xxs) 0;
+    grid-gap: var(--margin-l);
+    margin-top: var(--margin-l);
+    align-items: center;
+    color: var(--secondary-color);
+}
+.header-2 h4:before, .header-2 h4:after{
+    content: "";
+    display: block;
+    border-bottom:  var(--margin-xxs) solid var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color);
+    border-radius: var(--general-border-radius);
+}
+.line {
+    display: block;
+    width: 100%;
+    border-bottom: var(--margin-xxs) solid var(--primary-contrast-color);
+    margin: var(--margin-xxs) 0;
+    margin-top: var(--margin-l);
+    border-radius: var(--general-border-radius);
+}
+
+
+
 .list li:not(.list-header) {
     margin: 0.1rem 2rem;
+}
+/* For phones (small screens) */
+@media (max-width: 600px) {
+    .list li:not(.list-header) {
+        margin: 0.1rem 0;
+    }
 }
 .list.row-direction {
     flex-direction: row;
@@ -203,7 +297,7 @@ main {
     Serves as the main container for the card element.
     It uses flex layout, enabling easy alignment and distribution of child elements.
     The border and border-radius properties give it a defined look with rounded corners.
-    overflow: hidden prevents any child elements from extending beyond the card's boundaries, while margin: 20px provides spacing around the card.
+    overflow: hidden prevents any child elements from extending beyond the card's boundaries, while margin: var(--margin-m) provides spacing around the card.
 
 */
 .card {
@@ -212,7 +306,7 @@ main {
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    margin: 20px;
+    margin: var(--margin-m);
     background-color: white;
     max-width: 100%;
 }
@@ -226,6 +320,8 @@ main {
     Defines a fixed width for the image, maintaining consistency across cards.
     The min-height ensures that the height accommodates the image and additional spacing for "pinning" and "extending",
     while height: auto allows for the container to extend alongside the text.
+
+    NB: if it is a .card type that uses a image rather than text in the first place
 */
 .card-figure-image {
     width: 150px;
@@ -245,40 +341,54 @@ main {
     object-fit: cover;
 }
 /*
-    ToDo: commenting
-
-    This class is if one wants to use a headline instead of a image.
+    This class is if one wants to use a headline/text instead of a image for the left side.
+    It keeps from overflowing just in case and it sizes left box size.
 */
 .card-figure-headline {
     overflow: hidden;
     min-width: 30%;
-    max-width: 40%;
+    max-width: 50%;
     background-color: var(--primary-color);
 }
+/*
+    This contains the text and header.
+    It sizes y and x axis of distance in comparison to parent left box.
+
+    It's pseudo class ":before" draw a small line on top of it, similar to the ".headline".
+*/
 .card-figure-headline-header {
-    margin: var(--margin-m) auto;
-    font-size: 1.8rem;
-    font-weight: 500;
+    margin: var(--margin-m) var(--margin-s);
+    font-size: var(--margin-m);
     text-transform: uppercase;
+}
+.card-figure-headline-header p {
+    font-size: 2rem;
 }
 .card-figure-headline-header:before {
     content: "";
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
     display: block;
-    height: 0.25rem;
-    width: var(--general-space-big-n3);
+    height: var(--headline-line-height);
+    width: var(--headline-line-width);
     margin-bottom: var(--margin-m);
 }
-/* non default positioning of card when using headline instead of image */
+/*
+    non default positioning of card when using headline instead of image
+    ToDo: comment
+*/
 .card-figure:has(.card-figure-headline-header) .card-figure-expand { /*ToDo: take a look at toggle-label to see why positioning is weird*/
     position: absolute;
     top: 0;
-    left: clamp(calc(30% - 5%), calc(40% - 5%), calc(40% - 5%));
+    right: 0;
     width: calc(24px * 3);
     height: calc(24px * 3);
 }
-/* Card caption has all its elements hidden unless checked or hovered.*/
+/*
+    Card caption (right side box) has all its elements hidden unless checked or hovered.
+    We are able to emulate javascript clicking effects by using radio buttons on the html side and check if they are checked.
+    ToDo: only on click, remove hover
+*/
 .card-figure:has(.card-figure-headline-header) .card-figure-caption *{
     visibility: hidden;
 }
@@ -293,12 +403,16 @@ main {
     The flex-grow: 1 property allows it to expand and fill any available space in the flex container.
     The overflow: hidden property is used to clip any overflowing text,
     while max-height is calculated to show only a limited number of lines before truncation occurs.
+
+    The growth is the case for both,
+    while the truncation is only true if there is direct text contained in it (to align it properly,
+    so it does not look wonky.
 */
 .card-figure-caption {
     padding: 20px;
     flex-grow: 1; /* Allow caption to take remaining space */
     overflow: hidden;
-    max-height: calc(4.5em * 2); /* Limit height to show approximately 3 lines */
+    max-height: calc(4.5em * 2); /* Limit height to show approximately 3 lines ToDo: fix to actually be the case, make dynamic*/
     position: relative;
     text-overflow: ellipsis; /* Show ellipsis for overflowing text */
     display: -webkit-box; /* Required for line clamping */
@@ -322,11 +436,10 @@ main {
 /*
     The toggle element is a checkbox that controls the expansion of the caption. It has no default appearance, making it customizable.
     When the checkbox is checked, the background color changes to the secondary color.
-
 */
 #toggle-expand {
     appearance: none;
-    -webkit-appearance: none; /* For Safari */
+    -webkit-appearance: none; /* For Safari, and old */
     -moz-appearance: none; /* For Firefox */
     background-color: var(--primary-color);
     border-right: 2px solid var(--primary-contrast-color);
@@ -346,6 +459,8 @@ main {
 /*
      Positions the expand button relative to the card.
      Using absolute positioning, it places the button directly below the image, centered horizontally.
+
+     ToDo: fix so it actually gets placed correctly, as it is not the case for text version. might not be correct location of code, but must be based off this nontheless
 */
 .card-figure-expand {
     position: absolute;
@@ -357,7 +472,6 @@ main {
 /*
     Both images serve as icons for expanding or interacting with the card.
     They are absolutely positioned to fill their container completely
-
 */
 #fig-expand, #fig-expand-hover {
     position: absolute;
@@ -365,7 +479,6 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    /* object-fit: cover; */
     transition: opacity 0.3s ease;
     cursor: pointer;
 }
@@ -373,8 +486,7 @@ main {
     When hovering over the expand button hover, it emphasizes that it is clickable.
     Uses ::before pseudo class as part of wrapper (can't be used directly on img) to rotate image without anything else being effected.
 
-    ToDo:
-        - remove artifact/fragment code
+    The img is there to further emphesize that it is clickable (and its animation).
 */
 .fig-expand-hover-wrapper::before {
     content: "";
@@ -384,7 +496,7 @@ main {
     width: 100%;
     height: 100%;
     background: url("../media/weirdcircle.png") center no-repeat;
-    background-size: contain;  /* Adjust size of the image */
+    background-size: contain;
     animation: rotateBackground 5s linear infinite;
 }
 #toggle-expand:checked + .toggle-label .fig-expand-hover-wrapper::before,
@@ -400,18 +512,9 @@ main {
         transform: rotate(360deg);
     }
 }
-#fig-expand-hover {
-    /* transition: border 0.3s ease-in; /**/
-    /* background:
-            linear-gradient(165deg, rgba(233,13,44,0.5) 20%, rgba(9,12,18,1) 40%, rgba(246,243,237,0.8) 60%, rgba(22,242,211,0.4) 70%),
-            url("../media/dirt.jpg"),
-            url("../media/weirdcircle.png"); /**/
-}
-#fig-expand-hover:hover {
-    /* border: 5px solid black; /**/
-    /* border-radius: 15px; /**/
-
-}
+/*
+    Colors by overlaying background-color on the button.
+*/
 #fig-expand-hover::before {
     content: '';
     position: absolute;
@@ -419,9 +522,9 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Example overlay color */
+    background-color: rgba(0, 0, 0, 0.5);
     mix-blend-mode: multiply; /* Ensures the color only affects non-transparent areas */
-    z-index: 1;  /* Ensures the overlay appears above the background */
+    z-index: 1;  /* Overlay appears above the background */
 }
 /*
     When hovering over the expand button or when the checkbox is checked,
@@ -466,6 +569,9 @@ main {
 .card-figure-caption-link span {
     position: relative;
 }
+/*
+    Small svg icon to emphasize that it is a outgoing link.
+*/
 .card-figure-caption-link span img {
     position: absolute;
     bottom: 50%;
@@ -477,7 +583,7 @@ main {
     filter: brightness(0) saturate(100%);
 }
 .card-figure-caption-link:hover {
-    color: var(--primary-contrast-color); /* For dash */
+    color: var(--primary-contrast-color); /* For dash in front of link */
 }
 
 
