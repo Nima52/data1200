@@ -299,8 +299,9 @@ main {
     flex-direction: row;
     flex-wrap: wrap;
 }
+/* Makes sure the header occupies the full first row */
 .list.row-direction .list-header {
-    flex: 1 1 100%; /* Ensure the header occupies the full first row */
+    flex: 1 1 100%;
 }
 .centered {
     padding: 2rem clamp(1rem, 10vw, 20vw);
@@ -614,42 +615,15 @@ main {
     color: var(--primary-contrast-color); /* For dash in front of link */
 }
 /*
-    Change sizing for smaller viewports. ToDo
+    Changed the sizing of the card style for smaller viewports under 1280px to make space for the info box.
 */
-
-@media (max-width: 600px) {
+@media (max-width: 1280px) {
     .card-figure .card-figure-headline-header *{
-        font-size: 0.6rem;
-    }
-    .card-figure:has(.card-figure-headline-header) #toggle-expand:checked ~ .card-figure-caption *{
-        visibility: visible;
-    }
-    :root {
-        font-size: 18px; /* Smaller font size on phones */
-    }
-}
-@media (min-width: 601px) and (max-width: 1280px) {
-    .card-figure .card-figure-headline-header {
         font-size: 0.8rem;
     }
-    :root {
-        font-size: 18px; /* Slightly smaller font size for 16:9 */
-    }
-}
-@media (min-width: 1281px) and (max-width: 2000px) {
-    .card-figure .card-figure-headline-header {
-        font-size: 1rem;
-    }
-    :root {
-        font-size: 22px; /* Larger font size for ultra-wide screens */
-    }
-}
-@media (min-width: 2001px) {
-    .card-figure .card-figure-headline-header {
-        font-size: 1rem;
-    }
-    :root {
-        font-size: 24px; /* Large font size for very large screens */
+
+    .card-figure:has(#toggle-expand:checked) .card-figure-headline {
+        display: none;
     }
 }
 
