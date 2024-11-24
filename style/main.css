@@ -72,28 +72,22 @@
     font-weight: normal;
     font-style: normal;
 }
-/* For phones (small screens) */
+
 @media (max-width: 600px) {
     :root {
         font-size: 18px; /* Smaller font size on phones */
     }
 }
-
-/* For 16:9 aspect ratio screens (typical desktops) */
 @media (min-width: 601px) and (max-width: 1280px) {
     :root {
         font-size: 18px; /* Slightly smaller font size for 16:9 */
     }
 }
-
-/* For ultra-wide screens (21:9) */
 @media (min-width: 1281px) and (max-width: 2000px) {
     :root {
         font-size: 22px; /* Larger font size for ultra-wide screens */
     }
 }
-
-/* For very large screens (wider than 2000px) */
 @media (min-width: 2001px) {
     :root {
         font-size: 24px; /* Large font size for very large screens */
@@ -451,11 +445,11 @@ main {
     text-overflow: ellipsis; /* Show ellipsis for overflowing text */
     display: -webkit-box; /* Required for line clamping */
     -webkit-box-orient: vertical; /* Required for line clamping */
-    -webkit-line-clamp: var(--line-amount); /* Show up to 6 lines before truncation */
+    -webkit-line-clamp: var(--line-amount); /* Show up to x lines before truncation */
     transition: max-height 0.5s ease-in-out;
 }
 /*
-    On hover, the caption expands to reveal the full content, with the max-height set to 100%,
+    On checked, the caption expands to reveal the full content, with the max-height set to 100%,
     which effectively removes the height restriction.
     The use of overflow: hidden prevents a scrollbar from appearing, while -webkit-line-clamp: unset removes the line limit,
     allowing the full text to be visible.
@@ -498,8 +492,8 @@ main {
 */
 .card-figure-expand {
     position: absolute;
-    top: calc(150px); /*Image height*/
-    left: calc((150px - 24px * 3) /2); /*image width minus expand width divided by 2 to center position relative to image above it*/
+    top: calc(150px); /* Image height */
+    left: calc((150px - 24px * 3) /2); /* image width minus expand width divided by 2 to center position relative to image above it*/
     width: calc(24px * 3);
     height: calc(24px * 3);
 }
@@ -557,7 +551,7 @@ main {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    mix-blend-mode: multiply; /* Ensures the color only affects non-transparent areas */
+    mix-blend-mode: multiply; /* Stack colors */
     z-index: 1;  /* Overlay appears above the background */
 }
 /*
@@ -618,6 +612,45 @@ main {
 }
 .card-figure-caption-link:hover {
     color: var(--primary-contrast-color); /* For dash in front of link */
+}
+/*
+    Change sizing for smaller viewports. ToDo
+*/
+
+@media (max-width: 600px) {
+    .card-figure .card-figure-headline-header *{
+        font-size: 0.6rem;
+    }
+    .card-figure:has(.card-figure-headline-header) #toggle-expand:checked ~ .card-figure-caption *{
+        visibility: visible;
+    }
+    :root {
+        font-size: 18px; /* Smaller font size on phones */
+    }
+}
+@media (min-width: 601px) and (max-width: 1280px) {
+    .card-figure .card-figure-headline-header {
+        font-size: 0.8rem;
+    }
+    :root {
+        font-size: 18px; /* Slightly smaller font size for 16:9 */
+    }
+}
+@media (min-width: 1281px) and (max-width: 2000px) {
+    .card-figure .card-figure-headline-header {
+        font-size: 1rem;
+    }
+    :root {
+        font-size: 22px; /* Larger font size for ultra-wide screens */
+    }
+}
+@media (min-width: 2001px) {
+    .card-figure .card-figure-headline-header {
+        font-size: 1rem;
+    }
+    :root {
+        font-size: 24px; /* Large font size for very large screens */
+    }
 }
 
 
