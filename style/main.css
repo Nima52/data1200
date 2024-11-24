@@ -3,7 +3,7 @@
     # General Styling
     # Card Styling
     # Credits Styling (footer)
-    # Nav Styling (header)
+    # Header/Nav Styling (header)
 
 */
 
@@ -74,7 +74,7 @@
 /* For phones (small screens) */
 @media (max-width: 600px) {
     :root {
-        font-size: 16px; /* Smaller font size on phones */
+        font-size: 18px; /* Smaller font size on phones */
     }
 }
 
@@ -346,8 +346,9 @@ main {
 */
 .card-figure-headline {
     overflow: hidden;
-    min-width: 30%;
-    max-width: 50%;
+    min-width: 30vw;
+    max-width: 40vw;
+    height: auto;
     background-color: var(--primary-color);
 }
 /*
@@ -374,26 +375,29 @@ main {
     margin-bottom: var(--margin-m);
 }
 /*
-    non default positioning of card when using headline instead of image
-    ToDo: comment
+    The card button is positioned at the far right when using a headline instead of an image, with its width accounted for.
 */
-.card-figure:has(.card-figure-headline-header) .card-figure-expand { /*ToDo: take a look at toggle-label to see why positioning is weird*/
+.card-figure:has(.card-figure-headline-header) .card-figure-expand {
     position: absolute;
     top: 0;
-    right: 0;
+    left: calc(100% - (24px * 3));
     width: calc(24px * 3);
     height: calc(24px * 3);
+    z-index: var(--page-3-depth-axis);
 }
 /*
     Card caption (right side box) has all its elements hidden unless checked or hovered.
     We are able to emulate javascript clicking effects by using radio buttons on the html side and check if they are checked.
-    ToDo: only on click, remove hover
+
+    NB: Distinct from a normal card, as it incorporates something other than text. Which is why I target with :has pseudo class
 */
 .card-figure:has(.card-figure-headline-header) .card-figure-caption *{
     visibility: hidden;
 }
-.card-figure:has(.card-figure-headline-header) .card-figure-caption:is(:hover, :focus, :active) *,
-.card-figure:has(.card-figure-headline-header) .card-figure-expand:is(:hover, :focus, :active) ~ .card-figure-caption *,
+/* Could include if also wanted hover.
+.card-figure:has(.card-figure-headline-header) .card-figure-caption:is(:hover) *,
+.card-figure:has(.card-figure-headline-header) .card-figure-expand:is(:hover) ~ .card-figure-caption *,
+*/
 .card-figure:has(.card-figure-headline-header) #toggle-expand:checked ~ .card-figure-caption *{
     visibility: visible;
 }
@@ -409,15 +413,20 @@ main {
     so it does not look wonky.
 */
 .card-figure-caption {
-    padding: 20px;
+    line-height: 1.2;
+}
+.card-figure-caption {
+    --line-amount: 6;
+    --caption-padding: 20px; /* Need to also account for padding and margin for our formula. */
+    padding: var(--caption-padding);
     flex-grow: 1; /* Allow caption to take remaining space */
     overflow: hidden;
-    max-height: calc(4.5em * 2); /* Limit height to show approximately 3 lines ToDo: fix to actually be the case, make dynamic*/
+    max-height: calc( 1rem * 1.2 * var(--line-amount) + var(--caption-padding)); /* Limit line height, formula: 1rem (font-size) * line-height factor * amount + top padding + bottom padding */
     position: relative;
     text-overflow: ellipsis; /* Show ellipsis for overflowing text */
     display: -webkit-box; /* Required for line clamping */
     -webkit-box-orient: vertical; /* Required for line clamping */
-    -webkit-line-clamp: calc(3 * 2); /* Show up to 3 lines before truncation */
+    -webkit-line-clamp: var(--line-amount); /* Show up to 6 lines before truncation */
     transition: max-height 0.5s ease-in-out;
 }
 /*
@@ -426,8 +435,10 @@ main {
     The use of overflow: hidden prevents a scrollbar from appearing, while -webkit-line-clamp: unset removes the line limit,
     allowing the full text to be visible.
 */
+/* Could include if also wanted hover.
 .card-figure-caption:hover,
 .card-figure-expand:hover ~ .card-figure-caption,
+*/
 #toggle-expand:checked ~ .card-figure-caption{
     max-height: 100%;
     overflow: hidden;
@@ -459,8 +470,6 @@ main {
 /*
      Positions the expand button relative to the card.
      Using absolute positioning, it places the button directly below the image, centered horizontally.
-
-     ToDo: fix so it actually gets placed correctly, as it is not the case for text version. might not be correct location of code, but must be based off this nontheless
 */
 .card-figure-expand {
     position: absolute;
@@ -587,6 +596,34 @@ main {
 }
 
 
+/*
+    ---------------------
+    - # Footer Styling -
+    ---------------------
+    ToDo:
+        - Fix comments on #Credits Styling
+*/
+.footer {
+    position: relative;
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--primary-contrast-color);
+    border-radius: 85% 85% 0 0 / 30%; /* Opposite of header */
+}
+.footer-inside {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: var(--primary-color);
+    border-radius: var(--margin-xxl);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 /*
@@ -597,9 +634,6 @@ main {
         - Fix comments on #Credits Styling
 */
 
-.footer {
-
-}
 .credit-links {
     position: fixed;
     right: 0;
@@ -660,23 +694,22 @@ main {
 
 /*
     ---------------------
-    --- # Nav Styling ---
+    --- # Header/Nav Styling ---
     ---------------------
 */
 /*
-header is inner layer which holds general logo and such and nav is outer
-
-    ToDo:
-        - Fix comments on #Nav Styling
-        - make img look like banner by adding block to the top and a stick that attaches to it
-        -- this can be the underline, but needs aspects that makes it look like a stick.
-        --- Either somehow trace the image (transparent color inverted image, mby) of a stick or use fill or a font
-        - do not forget download of exam paper as a button/option, seperate by line.
+    The header is the inner layer ("main-header") that holds general elements like the logo and similar features,
+    while the navigation is contained in the outer layer ("auxiliary-header").
+    This setup creates an effect where, as you scroll, the top navigation disappears,
+    but the aesthetic of certain navigation styles remains as you scroll down.
 */
 body {
     position: relative;
 }
 :root {
+    /*
+        The difference in height between the outer and inner sections is needed to achieve the desired effect.
+    */
     --header-outer-height: 300px;
     --header-inner-height: 185px;
     --header-height-difference: calc(
@@ -705,74 +738,66 @@ body {
     --page-3-depth-axis: 3; /* Activity page */
     --page-4-depth-axis: 4; /* Github page */
 
-    /* NB some calculation of 90 deg / 2 between here and negative*/
-}
-/* inner header (the one that dissepears) that holds nav*/
-.auxiliary-header {
 
+}
+/* Outer header (the one that disappears) that contains the navigation. */
+.auxiliary-header {
     position: sticky;
     height: var(--header-outer-height);
-    top: calc(var(--header-height-difference) * -1); /* space for nav + cutting off so that it acheives the paralax*/
-
-    background-color: var(--primary-contrast-color); /* Fallback Color */
-
-    /* background: url("../media/rock.jpg"); /* ToDo: a img should only be on the Activity Page*/
+    /* Space is used for navigation and cutting off to achieve the desired effect. */
+    top: calc(var(--header-height-difference) * -1);
+    background-color: var(--primary-contrast-color);
     background-repeat: repeat;
     background-size: auto;
     background-position: left top;
-
-
-    border-radius: 0 0 85% 85% / 30%;
+    border-radius: 0 0 85% 85% / 30%; /* Makes bottom circular-ish */
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    z-index: var(--page-4-depth-axis); /* above other created elements in main*/
+    z-index: var(--page-4-depth-axis); /* Above other created elements in main */
 
 }
-/*outer header, which cuts off and acheives paralax*/
+/* Inner header, which cuts off its parent and creates the effect. */
 .main-header {
     position: sticky;
     height: var(--header-inner-height);
     top: 0;
-
-    background-color: var(--primary-contrast-color); /* Fallback Color */
+    background-color: var(--primary-contrast-color);
     width: 100%;
-
-    border-radius: 0 0 85% 85% / 30%;
-
+    border-radius: 0 0 85% 85% / 30%; /* Same as parent */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
+/* Contains the assets */
 .header-element {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* width: xxx; /* */
-
 }
-/* Wrapper class to keep center elements in the middle. Also for seperation of concerns.*/
+/*
+    A wrapper class to center elements in the middle and ensure separation of concerns.
+    NB: Used on the Activity Page.
+*/
 .header-element-center-group {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-/* Logo + added auxilary items and styling */
-.logo { /* .logo Class Styling Inside of .site-header */ /*ToDo: whole logo should be made gray filtered when it has scrolled down. This goes for the accent colors.*/
-    max-width: 100px;    /* Set the maximum width of the container */
-    max-height: 100px;   /* Set the maximum height of the container */
-    overflow: hidden;   /* Hide overflow if the image exceeds the container */
-    border-radius: 0 0 85% 85% / 30%;
+/* Logo with additional auxiliary items and styling. */
+.logo {
+    max-width: 100px;
+    max-height: 100px;
+    overflow: hidden;
+    border-radius: 0 0 85% 85% / 30%; /* Same as Parent, make kinda look like banner */
 }
-.logo img {
-    width: 100%;       /* Image will scale within the container width */
-    height: 100%;      /* Image will scale within the container height */
-
+.logo img { /* Image scales within container. */
+    width: 100%;
+    height: 100%;
 }
 /*
     Styling for poles that are placed at start and end of header-element. Page 1, 2 and 4 does not have .pole
+    NB: Just for Activity page.
 */
 .pole{
     height: var(--header-height-difference);
@@ -781,13 +806,11 @@ body {
 .auxiliary-header:has(#nav-3:checked) .pole {
     box-shadow: 0px 3px 1px -2px rgba(var(--page-3-distinction-rgb), 0.5);
 }
-.auxiliary-header:has(#nav-3:checked) .pole:hover { /* Could eventually make it navigate to the adjacent page, via js */
+.auxiliary-header:has(#nav-3:checked) .pole:hover {  /* Animation on hover to make the lightpole illuminate the supposed ground. */
     box-shadow: 0px 8px 3px -3px rgba(var(--page-3-distinction-rgb), 0.8);
     transform: scale(1.015) translateY(-1px);
 }
-
-
-
+/* Class that contains the text title of the current page. */
 .site-current {
     display: flex;
     justify-content: center;
@@ -797,31 +820,18 @@ body {
     width: 100%;
     height: 100%;
 }
-.arrow-left {
+/* Arrows next to logo. */
+.arrow-left, .arrow-right  {
     padding: 10px;
-}
-.arrow-left svg {
-    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
-}
-.arrow-right {
-    padding: 10px;
-}
-.arrow-right svg {
-    /*ToDo: should fill to the color of distinct color. also have fallback color (? or maybe not)*/
 }
 
 
 
 /* Navigation Bar*/
-/*
-    ToDo:
-        - bookmark underline when it is in scroll down mode. when hovered, then make bookmark longer down. bookmark type mean that it is border at bottom
-        -- could make this work by increasing margin? but how do I connect it to do so only when it is in scrolled down mode.
-        -- bookmark style/object is button to go to top (button)
-*/
 :root {
-    --underline-height: .5em; /* Animated underline height. Or rather, space needed from parent. */
-    --transition-duration : .5s; /* Animated duration. */
+    /* Navigation properties: underline for the link, and the rest for animation logic. */
+    --underline-height: var(--margin-xxs);
+    --transition-duration : .5s;
     --page-count: 4; /* Total amount of page(s) in website. */
 }
 /* nav Styling */
@@ -829,18 +839,16 @@ body {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    height: calc(var(--header-height-difference) / 2); /* Specific height that accounts for paralax spacing of inner header (main-header)*/
+    height: calc(var(--header-height-difference) / 2); /* Specific height that accounts for header effect spacing of inner header (main-header)*/
     width: 100%;
     justify-content: center;
-
-
     padding-bottom: var(--underline-height); /* For underline */
     margin-bottom: 2em; /* For underline */
 }
 .nav-list {
     list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: row; /* Align left to right */
     align-items: center;
     justify-content: space-between; /* Space items evenly across full width */
     width: 100%;
@@ -848,22 +856,19 @@ body {
 .nav-item { /* .nav-item Class Styling Inside of .nav-list */
     text-align: center;
     width: 100%;
-    /* background-color: var(--primary-contrast-color); /**/
 }
-/* distinct and general styling for anchor tag*/
+/* distinct and general styling for anchor tag */
 .nav-link { /* .nav-link Class Styling Inside of .nav-item */
     color: var(--primary-color);
     text-decoration: none;
     font-size: 1em;
     padding: 1em 0;
     transition: color 0.3s ease;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', sans-serif; /* Same as h1, h2, ..., etc */
 }
-.nav-item:hover .nav-link {
+.nav-item:hover .nav-link { /* Run the color change effect when its parent is hovered. */
     color: lightcoral;
     transition: color 0.2s ease-in-out;
-  /* background-color: #f0f0f0; /* hover background */
-  /* border-radius: 4px; /**/
     animation: colorTransition 1.2s forwards;
 }
 @keyframes colorTransition {
@@ -874,7 +879,9 @@ body {
         color: var(--secondary-color);
     }
 }
-
+/*
+    A distinct color for each nav link, serving as a form of color awareness, with a theme color specific to each page.
+*/
 .nav-item:has(#nav-1:checked) .nav-link:hover{
     text-decoration-color: var(--page-1-distinction);
     text-decoration-thickness: 3px;
@@ -908,19 +915,21 @@ body {
 .underline {
     position: relative;
     height: var(--underline-height);
-    width: 100%;
+    width: 80%; /* For space/padding of the left and right sides of underline*/
+    margin-left: 10%; /* Distance from left side to achive equal spacing of left and right */
     overflow: hidden;
-    /* background: var(--primary-contrast-color) !important; /**/
     border-radius: 10px;
 }
 .color-layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* ToDo: Have some Added padding, but then would also need to change alot of other elements/styling to accomodate for it.*/
+    width: 100%;
     height: 100%;
-    transition: transform var(--transition-duration) ease-in-out; /* ToDo:  Somehow activate the transition in reverse on page load. Might need to create a new element or wrap it.*/
+    transition: transform var(--transition-duration) ease-in-out;
+    border-radius: 10px;
 }
+/* Transition delay to add the trailing effect, achieved by transforming the x-axis position from left to right and back. */
 .start-color {
     transition: transform calc(var(--transition-duration) * 1) ease-in-out;
 }
@@ -933,7 +942,7 @@ body {
 .nav-item:hover .nav-link + .underline .color-layer{
     transform: translateX(100%); /* Hover effect for the nav-link */
 }
-/* Underline distinct and general coloring */
+/* The underline color and animation trailing colors are distinct for each page. */
 .nav-item input:checked + label .underline .start-color{
     background-color: lightcoral ;
 }
@@ -952,10 +961,10 @@ body {
 .nav-item input:checked + label .underline .end-color{
     background-color: var(--secondary-color);
 }
-/* Default coloring of other underline locations other than current one */
+/* Default coloring of other underline locations, other than the current one, to emphasize that they are clickable as well. */
 #nav-1:not(:checked) + label .underline,
 #nav-2:not(:checked) + label .underline,
 #nav-3:not(:checked) + label .underline,
 #nav-4:not(:checked) + label .underline {
-    /* background: var(--primary-contrast-color); /**/
+    background: var(--primary-color);
 }
