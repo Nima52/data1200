@@ -323,7 +323,6 @@ main {
 .card {
     position: relative;
     display: flex;
-    border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     margin: var(--margin-m);
@@ -359,6 +358,7 @@ main {
     width: 150px;
     height: 150px;
     object-fit: cover;
+    border-radius: var(--general-border-radius); /* Added for visual separation. */
 }
 /*
     This class is if one wants to use a headline/text instead of a image for the left side.
@@ -441,6 +441,7 @@ main {
     padding: var(--caption-padding);
     flex-grow: 1; /* Allow caption to take remaining space */
     overflow: hidden;
+    /* !!NB: This assumes that letter sizing is the same for all elements inside of class. Could make more dynamic with js. */
     max-height: calc( 1rem * 1.2 * var(--line-amount) + var(--caption-padding)); /* Limit line height, formula: 1rem (font-size) * line-height factor * amount + top padding + bottom padding */
     position: relative;
     text-overflow: ellipsis; /* Show ellipsis for overflowing text */
@@ -644,7 +645,6 @@ main {
     align-items: center;
     flex-direction: column;
     background-color: var(--primary-contrast-color);
-    border-radius: 85% 85% 0 0 / 30%; /* Opposite of header */
 }
 .footer-inside {
     position: absolute;
