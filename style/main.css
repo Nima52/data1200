@@ -4,6 +4,7 @@
     # Card Styling
     # Credits Styling (footer)
     # Header/Nav Styling (header)
+    - inspiration: https://codepen.io/linux/pen/aEQKWP
 
 */
 
@@ -528,7 +529,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("../media/weirdcircle.png") center no-repeat;
+    background: url("../media/weirdcircle.webp") center no-repeat;
     background-size: contain;
     animation: rotateBackground 5s linear infinite;
 }
