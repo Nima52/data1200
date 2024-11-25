@@ -56,7 +56,6 @@
     */
     --page-spacing: calc( var(--underline-margin-x) + ((100% / var(--page-count)) / 2 ) - (var(--headline-line-width) / 2) );
 
-
 }
 /* Basic reset for consistent styling */
 *,
@@ -168,6 +167,27 @@ main {
     height: auto;
 
 }
+.cell {
+    border: 2px solid var(--primary-contrast-color);
+    border-radius: var(--general-border-radius);
+    padding: var(--margin-s);
+}
+.cell:has(.arrow-right) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+/*exsists alongside .cell*/
+.list-header.cell:has(.arrow-right) {
+    border: none;
+    margin: 0;
+
+}
+.list-header.cell:has(.arrow-right)::before {
+    margin: 0 var(--margin-s);
+    height: calc(2px + 1px); /* Stroke width + 1px */
+    background-color: var(--primary-contrast-color);
+}
 .text-block *{
     padding: var(--margin-m) var(--margin-l);
     margin: 20px 0;
@@ -234,8 +254,7 @@ main {
     margin: 1rem;
     padding: 0.5rem;
 }
-/* For phones (small screens) */
-@media (max-width: 600px) {
+@media (max-width: 1280px) {
     .list {
         padding: 1rem 0.2rem;
     }
@@ -289,8 +308,7 @@ main {
 .list li:not(.list-header) {
     margin: 0.1rem 2rem;
 }
-/* For phones (small screens) */
-@media (max-width: 600px) {
+@media (max-width: 1280px) {
     .list li:not(.list-header) {
         margin: 0.1rem 0;
     }
