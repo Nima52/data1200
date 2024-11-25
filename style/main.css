@@ -12,9 +12,6 @@
     -------------------------
     --- # General Styling ---
     -------------------------
-    ToDo:
-        - Fix comments on #General Styling
-        - Check to see if works on all browsers
 */
 /* Variables */
 :root {
@@ -57,7 +54,7 @@
     --page-spacing: calc( var(--underline-margin-x) + ((100% / var(--page-count)) / 2 ) - (var(--headline-line-width) / 2) );
 
 }
-/* Basic reset for consistent styling */
+/* Basic reset for consistent styling. */
 *,
 *::before,
 *::after {
@@ -65,6 +62,7 @@
     margin: 0;
     padding: 0;
 }
+/* Other font. */
 @font-face {
     font-family: "Outfit";
     src: url("../media/Outfit.ttf") format("truetype");
@@ -74,22 +72,22 @@
 
 @media (max-width: 600px) {
     :root {
-        font-size: 18px; /* Smaller font size on phones */
+        font-size: 18px; /* Smaller font size on phones. */
     }
 }
 @media (min-width: 601px) and (max-width: 1280px) {
     :root {
-        font-size: 18px; /* Slightly smaller font size for 16:9 */
+        font-size: 18px; /* Slightly smaller font size for 16:9. */
     }
 }
 @media (min-width: 1281px) and (max-width: 2000px) {
     :root {
-        font-size: 22px; /* Larger font size for ultra-wide screens */
+        font-size: 22px; /* Larger font size for ultra-wide screens. */
     }
 }
 @media (min-width: 2001px) {
     :root {
-        font-size: 24px; /* Large font size for very large screens */
+        font-size: 24px; /* Large font size for very large screens. */
     }
 }
 h1,h2,h3,h4,h5,h6 {
@@ -114,19 +112,20 @@ h6 {
     font-size: var(--margin-s);
 }
 
-body { /* <body> Tag Styling */
+body {
     background-color: var(--primary-color);
-    overflow-wrap: break-word; /* Ensure long words break and wrap onto the next line */
-    word-wrap: break-word;     /* Fallback for older browsers */
-    white-space: normal;       /* Ensure text wraps normally */
+    overflow-wrap: break-word; /* Ensure long words break and wrap onto the next line. */
+    word-wrap: break-word;     /* Fallback for older browsers. */
+    white-space: normal;       /* Ensure text wraps normally. */
 }
-a { /* <a> Tag Styling */
+/* Universal link styling. */
+a {
     text-decoration: none;
     color: var(--secondary-color);
     font-weight: bold;
     transition: color 0.2s ease;
 }
-a:is(:hover, :focus, :active) { /* <a> Tag Styling On Click And Hover*/
+a:is(:hover, :focus, :active) {
     color: var(--secondary-constrast-color);
     text-decoration: underline;
 }
@@ -134,13 +133,13 @@ main {
     padding: var(--margin-m) var(--page-spacing); /* Responsive side gaps */
 
 }
+/* Video styling. */
 .video {
     max-width: 100%;
     margin: auto 10vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 .video video {
     width: 100%;
@@ -148,6 +147,12 @@ main {
     border-radius: var(--general-border-radius);
     border: 2px solid var(--primary-contrast-color);
 }
+.video-caption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
+}
+/* Image styling. */
 .image-figure{
     max-width: 100%;
     width: 100%;
@@ -167,6 +172,7 @@ main {
     height: auto;
 
 }
+/* Cell inside List styling. */
 .cell {
     border: 2px solid var(--primary-contrast-color);
     border-radius: var(--general-border-radius);
@@ -177,7 +183,7 @@ main {
     flex-direction: row;
     align-items: center;
 }
-/*exsists alongside .cell*/
+/* Exists alongside .cell*/
 .list-header.cell:has(.arrow-right) {
     border: none;
     margin: 0;
@@ -185,19 +191,16 @@ main {
 }
 .list-header.cell:has(.arrow-right)::before {
     margin: 0 var(--margin-s);
-    height: calc(2px + 1px); /* Stroke width + 1px */
+    height: calc(2px + 1px); /* Stroke width (svg asset) + 1px */
     background-color: var(--primary-contrast-color);
 }
+/* General Text Styling. */
 .text-block *{
     padding: var(--margin-m) var(--margin-l);
     margin: 20px 0;
     line-height: 1.5;
 }
-.video-caption {
-    margin-top: 1rem;
-    font-size: 1rem;
-    text-align: center;
-}
+/* General header Styling. */
 .headline {
     margin: var(--margin-m) 0;
     text-transform:uppercase;
@@ -206,9 +209,9 @@ main {
 }
 .headline p {
     font-size: 2rem;
-    background-color: var(--primary-color); /* to cut of styling for .line by parent z-axis*/
+    background-color: var(--primary-color); /* Serves the purpose to cut off styling for .line by parent z-axis*/
 }
-.headline:before {
+.headline:before { /* Line above header */
     content: "";
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
@@ -217,9 +220,30 @@ main {
     width: var(--headline-line-width);
     margin-bottom: var(--margin-m);
 }
+.header-2 h4{ /* Second Header Styling*/
+    text-align:center;
+    text-transform:uppercase;
+    letter-spacing: var(--margin-xxs);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: var(--margin-xxs) 0;
+    grid-gap: var(--margin-l);
+    margin-top: var(--margin-l);
+    align-items: center;
+    color: var(--secondary-color);
+}
+.header-2 h4:before, .header-2 h4:after{
+    content: "";
+    display: block;
+    border-bottom:  var(--margin-xxs) solid var(--primary-contrast-color);
+    background-color: var(--primary-contrast-color);
+    border-radius: var(--general-border-radius);
+}
 /*
     Line that connects styling accent colors, takes use of other element(s) z-index.
     mentioned on specific elements where it is used by, e.g. "z-index for .line"
+
+    Refer to headline.
 */
 .line-wrapper {
     position: relative;
@@ -234,6 +258,7 @@ main {
     left: calc(var(--headline-line-width) / 2 ); /* Middle of .headline */
     z-index: var(--page-2-depth-axis);
 }
+/* General styling for lists that can be stacked. */
 .list { /*Always applied on ul element and li elements are its children*/
     position: relative;
     width: 100%;
@@ -254,7 +279,7 @@ main {
     margin: 1rem;
     padding: 0.5rem;
 }
-@media (max-width: 1280px) {
+@media (max-width: 1280px) { /* Makes sure that elements are not wonky on smaller screens. */
     .list {
         padding: 1rem 0.2rem;
     }
@@ -263,11 +288,11 @@ main {
         margin: 1rem 0;
     }
 }
-.list-header {
+.list-header { /* Header for list. */
     margin: var(--margin-m) 0;
     text-transform:uppercase;
 }
-.list-header:before {
+.list-header:before { /* Long line */
     content: "";
     background-color: var(--secondary-color);
     border-radius: var(--general-border-radius);
@@ -275,25 +300,23 @@ main {
     height: var(--margin-xxs);
     width: 30vw;
 }
-.header-2 h4{
-    text-align:center;
-    text-transform:uppercase;
-    letter-spacing: var(--margin-xxs);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: var(--margin-xxs) 0;
-    grid-gap: var(--margin-l);
-    margin-top: var(--margin-l);
-    align-items: center;
-    color: var(--secondary-color);
+.list li:not(.list-header) {
+    margin: 0.1rem 2rem;
 }
-.header-2 h4:before, .header-2 h4:after{
-    content: "";
-    display: block;
-    border-bottom:  var(--margin-xxs) solid var(--primary-contrast-color);
-    background-color: var(--primary-contrast-color);
-    border-radius: var(--general-border-radius);
+@media (max-width: 1280px) { /* So margins do not conflict on smaller screens. */
+    .list li:not(.list-header) {
+        margin: 0.1rem 0;
+    }
 }
+.list.row-direction { /* To change direction of list. Rather than column.*/
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+/* Makes sure the header occupies the full first row */
+.list.row-direction .list-header {
+    flex: 1 1 100%;
+}
+/* Just a normal line. */
 .line {
     display: block;
     width: 100%;
@@ -302,25 +325,7 @@ main {
     margin-top: var(--margin-l);
     border-radius: var(--general-border-radius);
 }
-
-
-
-.list li:not(.list-header) {
-    margin: 0.1rem 2rem;
-}
-@media (max-width: 1280px) {
-    .list li:not(.list-header) {
-        margin: 0.1rem 0;
-    }
-}
-.list.row-direction {
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-/* Makes sure the header occupies the full first row */
-.list.row-direction .list-header {
-    flex: 1 1 100%;
-}
+/* Just normal centering by means of padding. Clamp makes it dynamic (no need for media queries). */
 .centered {
     padding: 2rem clamp(1rem, 10vw, 20vw);
 }
@@ -651,8 +656,9 @@ main {
     ---------------------
     - # Footer Styling -
     ---------------------
-    ToDo:
-        - Fix comments on #Credits Styling
+*/
+/*
+    A rather standard footer with a child element that stands out, like a hollow.
 */
 .footer {
     position: relative;
@@ -680,18 +686,20 @@ main {
     ---------------------
     - # Credits Styling -
     ---------------------
-    ToDo:
-        - Fix comments on #Credits Styling
 */
-
+/*
+    An aside box that is vertically centered using transform and top,
+    while being positioned on the right side. It serves to display credits, with one column per person,
+    and features a hover animation that highlights the box.
+*/
 .credit-links {
     position: fixed;
     right: 0;
     top: 50%;
     transform: translatey(-50%);
-    padding: 1em 0.5em 1em 1em;
+    padding: 1rem 0.5rem 1rem 1rem;
     background: var(--primary-color);
-    border-radius: 0.5em 0 0 0.5em;
+    border-radius: 0.5rem 0 0 0.5rem;
     box-shadow: -4px 0px 0px var(--secondary-color);
     transition: all 300ms ease;
     display: flex;
@@ -701,20 +709,18 @@ main {
 
 .credit-links:hover {
     box-shadow: -8px 0px 20px var(--secondary-constrast-color);
-    padding: 1em;
+    padding: 1rem;
 }
 .credit-header {
     color: var(--primary-contrast-color);
 }
 .footer-link {
     list-style: none;
-    display: flex;
-    flex-direction: column;
     gap: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px;
+    padding: var(--margin-xxs) 0;
 }
 .footer-link a {
     color: var(--primary-contrast-color);
@@ -724,6 +730,7 @@ main {
 }
 .footer-link a:hover {
     filter: invert(77%) sepia(51%) saturate(683%) hue-rotate(110deg) brightness(95%) contrast(100%);
+    /* Light blue using: https://codepen.io/sosuke/pen/Pjoqqp*/
     transform: scale(1.1);
 }
 .footer-link a img {
